@@ -5,6 +5,7 @@
 #SBATCH --mem=1g
 #SBATCH --cpus-per-task=1
 #SBATCH --partition=standard
+#SBATCH --output=./s_out/slurm_%j-%a.out
 
 # Create directory for Rdata files, if not existing
 mkdir -p ./Rdata/combined/
