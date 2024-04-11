@@ -5,7 +5,8 @@
 #SBATCH --mem=1g
 #SBATCH --cpus-per-task=1
 #SBATCH --partition=standard
-#SBATCH --account=biostat625f23_class
 
-module load Rtidyverse
+# Create directory for Rdata files, if not existing
+mkdir -p ./Rdata
+
 R CMD BATCH --no-save --no-restore combine.R
