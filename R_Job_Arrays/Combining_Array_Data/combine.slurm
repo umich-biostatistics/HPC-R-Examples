@@ -10,4 +10,4 @@
 # Create directory for Rdata files, if not existing
 mkdir -p ./Rdata/combined/
 
-R CMD BATCH --no-save --no-restore combine.R
+R CMD BATCH --no-save --no-restore combine.R ./r_out/combine_$SLURM_JOB_ID-$SLURM_ARRAY_TASK_ID.Rout
