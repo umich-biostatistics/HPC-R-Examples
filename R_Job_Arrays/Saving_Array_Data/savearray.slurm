@@ -13,7 +13,7 @@
 #SBATCH --output=./s_out/slurm_%j-%a.out
 
 # Create output directories in the current directory, if not existing
-mkdir -p ./r_out ./s_out
+mkdir -p ./r_out ./s_out ./Rdata
 
 # Run R script and place stdout in ./r_out/
 R CMD BATCH --no-save --no-restore saveobjectsarrayscript.R ./r_out/saveobjectarrayscript_$SLURM_JOB_ID-$SLURM_ARRAY_TASK_ID.Rout
