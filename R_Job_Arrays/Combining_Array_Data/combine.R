@@ -1,6 +1,6 @@
 results=vector(mode="list", 10L)
 for (i in 1:10){
-	load(paste0(i, ".Rdata"))
+	load(paste0("./Rdata/", i, ".Rdata"))
 	results[[i]]=output
 }
-save(results, file="combinedresults.Rdata")
+save(results, file="./Rdata/combined/combinedresults.Rdata")
