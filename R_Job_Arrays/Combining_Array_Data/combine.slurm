@@ -5,9 +5,9 @@
 #SBATCH --mem=1g
 #SBATCH --cpus-per-task=1
 #SBATCH --partition=standard
-#SBATCH --output=./s_out/slurm_%j-%a.out
+#SBATCH --output=./s_out/slurm_%j.out
 
 # Create directory for Rdata files, if not existing
 mkdir -p ./Rdata/combined/
 
-R CMD BATCH --no-save --no-restore combine.R ./r_out/combine_$SLURM_JOB_ID-$SLURM_ARRAY_TASK_ID.Rout
+R CMD BATCH --no-save --no-restore combine.R ./r_out/combine_$SLURM_JOB_ID.Rout
