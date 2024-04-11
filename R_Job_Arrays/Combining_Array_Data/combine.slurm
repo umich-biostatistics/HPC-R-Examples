@@ -7,6 +7,6 @@
 #SBATCH --partition=standard
 
 # Create directory for Rdata files, if not existing
-mkdir -p ./Rdata
+mkdir -p ./Rdata/combined/
 
 R CMD BATCH --no-save --no-restore combine.R
