@@ -5,5 +5,6 @@
 #SBATCH --mem=4g
 #SBATCH --cpus-per-task=1
 #SBATCH --partition=standard
+#SBATCH --account=
 
 R CMD BATCH --no-save --no-restore script.R
