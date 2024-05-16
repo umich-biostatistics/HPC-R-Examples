@@ -8,7 +8,7 @@
 #SBATCH --mem=1g
 #SBATCH --cpus-per-task=1
 #SBATCH --array=1-10
-#SBATCH --output=$SLURM_SUBMIT_DIR/s_out/%x_%A-%a.out
+#SBATCH --output=./s_out/%x_%A-%a.out
 
 # Make sure to update the following!
 #SBATCH --partition=standard
