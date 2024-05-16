@@ -15,7 +15,7 @@
 #SBATCH --account=training
 
 # Create output directories in the submission directory, if not existing
-mkdir -p "$SLURM_SUBMIT_DIR"/r_out "$SLURM_SUBMIT_DIR"/s_out
+mkdir -p "$SLURM_SUBMIT_DIR"/r_out "$SLURM_SUBMIT_DIR"/s_out "$SLURM_SUBMIT_DIR"/Rdata
 
 # Load the R module
 module load R
