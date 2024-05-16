@@ -9,4 +9,4 @@ for (i in 1:10){
 }
 
 # Save the combined list as combined_results.Rdata
-save(results, file <- paste0("Rdata/combined/combined_results.Rdata"))
+save(results, file=paste0("Rdata/combined/combined_results.Rdata"))
