@@ -7,7 +7,7 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mem=100m
 #SBATCH --cpus-per-task=1
-#SBATCH --output=./s_out/%x_%A-%a.out
+#SBATCH --output=./s_out/%x_%j.out
 
 # Make sure to update the following!
 #SBATCH --partition=standard
@@ -20,4 +20,4 @@ mkdir -p "$SLURM_SUBMIT_DIR"/Rdata/combined/ "$SLURM_SUBMIT_DIR"/r_out "$SLURM_S
 module load R
 
 # Run R script in batch mode and place 
-R CMD BATCH --no-save --no-restore combine.R ./r_out/"$SLURM_JOB_NAME"_"$SLURM_ARRAY_JOB_ID"-"$SLURM_ARRAY_TASK_ID".Rout
+R CMD BATCH --no-save --no-restore combine.R ./r_out/"$SLURM_JOB_NAME"_"$SLURM_ARRAY_JOB_ID".Rout
