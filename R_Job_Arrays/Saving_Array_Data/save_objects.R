@@ -7,4 +7,4 @@ output <- paste0("Entering loop number:", i)
 # Wait for 5 minutes before saving - so we can see it in the squeue
 Sys.sleep(5)
 
-save(output, file <- paste0("Rdata/", i, ".Rdata"))
+save(output, file=paste0("Rdata/", i, ".Rdata"))
