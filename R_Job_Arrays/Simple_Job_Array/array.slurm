@@ -8,8 +8,11 @@
 #SBATCH --mem=1g
 #SBATCH --cpus-per-task=1
 #SBATCH --array=1-10
-#SBATCH --partition=standard
 #SBATCH --output=$SLURM_SUBMIT_DIR/s_out/%x_%A-%a.out
+
+# Make sure to update the following!
+#SBATCH --partition=standard
+#SBATCH --account=training
 
 # Create output directories in the submission directory, if not existing
 mkdir -p $SLURM_SUBMIT_DIR/r_out $SLURM_SUBMIT_DIR/s_out
