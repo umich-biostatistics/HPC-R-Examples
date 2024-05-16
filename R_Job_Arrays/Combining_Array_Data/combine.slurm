@@ -20,4 +20,4 @@ mkdir -p "$SLURM_SUBMIT_DIR"/Rdata/combined/ "$SLURM_SUBMIT_DIR"/r_out "$SLURM_S
 module load R
 
 # Run R script in batch mode and place 
-R CMD BATCH --no-save --no-restore combine.R ./r_out/"$SLURM_JOB_NAME"_"$SLURM_ARRAY_JOB_ID".Rout
+R CMD BATCH --no-save --no-restore combine.R ./r_out/"$SLURM_JOB_NAME"_"$SLURM_JOB_ID".Rout
