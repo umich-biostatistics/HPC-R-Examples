@@ -9,11 +9,12 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --array=1-10
 #SBATCH --partition=standard
-# Place slurm job output in ./s_out/
-#SBATCH --output=./s_out/slurm_%j-%a.out
+#SBATCH --output=$SLURM_SUBMIT_DIR/s_out/%x_%A-%a.out
 
-# Create output directories in the current directory, if not existing
-mkdir -p ./r_out ./s_out
+# Create output directories in the submission directory, if not existing
+mkdir -p $SLURM_SUBMIT_DIR/r_out $SLURM_SUBMIT_DIR/s_out
+
+module load R
 
 # Run arrayscript.R and place stdout in ./r_out/
-R CMD BATCH --no-save --no-restore arrayscript.R ./r_out/simple_array_$SLURM_JOB_ID-$SLURM_ARRAY_TASK_ID.Rout
+R CMD BATCH --no-save --no-restore arrayscript.R $SLURM_SUBMIT_DIR/r_out/$SLURM_JOB_NAME_$SLURM_ARRAY_JOB_ID-$SLURM_ARRAY_TASK_ID.Rout
