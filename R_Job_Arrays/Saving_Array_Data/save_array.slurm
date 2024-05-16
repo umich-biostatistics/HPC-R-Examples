@@ -2,9 +2,9 @@
 
 # Simple 10-array job
 
-#SBATCH --job-name=simple_array
+#SBATCH --job-name=save_objects
 #SBATCH --time=5:00
-#SBATCH --mail-type=NONE
+#SBATCH --mail-type=ALL
 #SBATCH --mem=1g
 #SBATCH --cpus-per-task=1
 #SBATCH --array=1-10
@@ -15,9 +15,10 @@
 #SBATCH --account=training
 
 # Create output directories in the submission directory, if not existing
-mkdir -p $SLURM_SUBMIT_DIR/r_out $SLURM_SUBMIT_DIR/s_out
+mkdir -p "$SLURM_SUBMIT_DIR"/r_out "$SLURM_SUBMIT_DIR"/s_out
 
+# Load the R module
 module load R
 
-# Run arrayscript.R and place stdout in ./r_out/
-R CMD BATCH --no-save --no-restore arrayscript.R $SLURM_SUBMIT_DIR/r_out/$SLURM_JOB_NAME_$SLURM_ARRAY_JOB_ID-$SLURM_ARRAY_TASK_ID.Rout
+# Run R script and place stdout in ./r_out/
+R CMD BATCH --no-save --no-restore save_objects.R ./r_out/"$SLURM_JOB_NAME"_"$SLURM_ARRAY_JOB_ID"-"$SLURM_ARRAY_TASK_ID".Rout
