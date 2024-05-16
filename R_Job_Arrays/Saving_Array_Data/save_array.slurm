@@ -3,9 +3,9 @@
 # Simple 10-array job
 
 #SBATCH --job-name=save_objects
-#SBATCH --time=5:00
+#SBATCH --time=1:00
 #SBATCH --mail-type=ALL
-#SBATCH --mem=1g
+#SBATCH --mem=100m
 #SBATCH --cpus-per-task=1
 #SBATCH --array=1-10
 #SBATCH --output=./s_out/%x_%A-%a.out
