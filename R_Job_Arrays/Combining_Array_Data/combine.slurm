@@ -3,9 +3,9 @@
 # Combine Rdata files in directory defined in combine.R
 
 #SBATCH --job-name=combine
-#SBATCH --time=5:00
+#SBATCH --time=1:00
 #SBATCH --mail-type=ALL
-#SBATCH --mem=1g
+#SBATCH --mem=100m
 #SBATCH --cpus-per-task=1
 #SBATCH --output=./s_out/%x_%A-%a.out
 
