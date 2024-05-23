@@ -6,7 +6,7 @@
 
 #SBATCH --job-name=save_objects
 #SBATCH --time=1:00
-#SBATCH --mail-type=ALL
+#SBATCH --mail-type=NONE
 #SBATCH --mem=100m
 #SBATCH --cpus-per-task=1
 #SBATCH --array=1-10
