@@ -1,50 +1,51 @@
 #!/bin/bash
 
+#########################
+### SBATCH Directives ###
+#########################
+
 # The name of the job
-#SBATCH --job-name=JOBNAME
+#SBATCH --job-name=example
 
-# The name and location of the output file; this example format
-# will put the output in your home directory and call the output
-# file by the job name, a `-`, and finally the job number.  There
-# are many options; see the sbatch man page, `filename pattern`
-# section for more options and examples.  Make sure that the
-# output directory exists *before* you submit the job!  Do *not*
-# use any directory that is not available on all nodes, e.g., /tmp.
+# The name and location of the output file - the default directory is the 
+# working directory, i.e. the one the job was submitted from.
+# %x represents the job name, and %j represents the job number
+# if you specify a directory, ensure it exists first with the mkdir -p command
+# at the begging of your list of commands torwards the bottom of this file.
+#SBATCH --output=%x-%j
 
-#SBATCH --output=/home/%u/%x-%j
+## CPU Options ##
+# You will not need to use all of these at the same time typically.
+# See https://myumi.ch/mZJZE for an explainer on parallelization options
 
-##### Resources for your job
+# Number of tasks to run
+#SBATCH --ntasks=1
 
-# number of physical nodes
+# Number of physical nodes (computers)
 #SBATCH --nodes=1
 
-# number tasks (processes) per node; this will most commonly be the
-# same number as the number of processors.  Each task will get one
-# processor by default.
+# Number of tasks per node
 #SBATCH --ntasks-per-node=1
 
-# memory per node
-#SBATCH --mem=4g
+# Number of CPUs for each task being run by your job
+#SBATCH --cpus-per-task=1
 
-#### Maximum amount of time the job will be allowed to run
-####    Recommended formats:  MM:SS, HH:MM:SS, DD-HH:MM
+# Memory per node
+#SBATCH --mem=1g
+
+# Maximum amount of time the job will be allowed to run
+# Recommended formats:  MM:SS, HH:MM:SS, DD-HH:MM
 #SBATCH --time=00:05:00
 
-# Money matters; who pays
-#SBATCH --account=test
+# E-Mail notifications - possible options: NONE, BEGIN, END, FAIL, REQUEUE, ALL
+#SBATCH --mail-type=ALL
 
-# Which group of nodes (partition) should this job run in
-#SBATCH --partition=standard
-
-# Whom to send e-mail about the job; change to your e-mail address
-#SBATCH --mail-user=username@umich.edu
-
-# When to send e-mail: pick from NONE, BEGIN, END, FAIL, REQUEUE, ALL
-#SBATCH --mail-type=NONE
-
-# Your commands after this line
+#####################################
+### Your commands after this line ###
+#####################################
 
 # Load the R module (not required for Biostat Cluster, but won't hurt)
 module load R
 
+# Run the script in R Batch Mode
 R CMD BATCH --no-save --no-restore script.R
