@@ -1,7 +1,7 @@
 # HPC R Examples
 
 > [!NOTE]
-> This branch contains slurm files specific to the Biostat Cluster.
+> This branch contains slurm files specific to the BDSI training on Biostat Cluster.
 
 ## Summary
 
