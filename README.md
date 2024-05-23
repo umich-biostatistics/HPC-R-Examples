@@ -1,5 +1,8 @@
 # HPC R Examples
 
+> [!NOTE]
+> This branch contains slurm files specific to the Biostat Cluster.
+
 ## Summary
 
 These are example R and SLURM scripts that can be used to show various methods of running jobs on an HPC cluster.
