@@ -40,6 +40,12 @@
 # E-Mail notifications - possible options: NONE, BEGIN, END, FAIL, REQUEUE, ALL
 #SBATCH --mail-type=ALL
 
+# Use the BDSI partition that has been reserved for BDSI users (cn060)
+#SBATCH --partition=bdsi
+
+# Use the bdsi account created for all bdsi users
+#SBATCH --account=bdsi
+
 #####################################
 ### Your commands after this line ###
 #####################################
