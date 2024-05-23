@@ -2,6 +2,8 @@
 
 > [!NOTE]
 > This branch contains slurm files specific to the BDSI training on Biostat Cluster.
+>
+> Use `git clone -b bdsi https://github.com/umich-biostatistics/HPC-R-Examples.git`
 
 ## Summary
 
