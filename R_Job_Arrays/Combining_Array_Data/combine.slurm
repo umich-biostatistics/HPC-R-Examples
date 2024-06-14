@@ -8,6 +8,8 @@
 #SBATCH --mem=100m
 #SBATCH --cpus-per-task=1
 #SBATCH --output=s_out/%x_%j.out
+#SBATCH --partition=bdsi
+#SBATCH --account=bdsi-users
 
 # Create directory for Rdata files, if not existing
 mkdir -p "$SLURM_SUBMIT_DIR"/Rdata/combined/ "$SLURM_SUBMIT_DIR"/r_out "$SLURM_SUBMIT_DIR"/s_out
