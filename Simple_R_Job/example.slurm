@@ -44,7 +44,7 @@
 #SBATCH --partition=bdsi
 
 # Use the bdsi account created for all bdsi users
-#SBATCH --account=bdsi
+#SBATCH --account=bdsi-users
 
 #####################################
 ### Your commands after this line ###
