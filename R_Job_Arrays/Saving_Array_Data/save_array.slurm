@@ -13,6 +13,7 @@
 #SBATCH --output=s_out/%x_%A-%a.out
 #SBATCH --partition=bdsi
 #SBATCH --account=bdsi-users
+#SBATCH --qos-bdsi
 
 # Create output directories in the submission directory, if not existing
 mkdir -p "$SLURM_SUBMIT_DIR"/r_out "$SLURM_SUBMIT_DIR"/s_out "$SLURM_SUBMIT_DIR"/Rdata
