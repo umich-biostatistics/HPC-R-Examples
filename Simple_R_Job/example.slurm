@@ -46,6 +46,8 @@
 # Use the bdsi account created for all bdsi users
 #SBATCH --account=bdsi-users
 
+#SBATCH --qos=bdsi
+
 #####################################
 ### Your commands after this line ###
 #####################################
