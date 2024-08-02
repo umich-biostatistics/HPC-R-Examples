@@ -23,6 +23,9 @@
 # processor by default.
 #SBATCH --ntasks-per-node=1
 
+# Number of CPUs for each task being run by your job
+#SBATCH --cpus-per-task=1
+
 # memory per node
 #SBATCH --mem=4g
 
