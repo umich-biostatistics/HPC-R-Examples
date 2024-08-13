@@ -30,11 +30,11 @@
 # Number of CPUs for each task being run by your job
 #SBATCH --cpus-per-task=1
 
-# Memory per node
-#SBATCH --mem=1g
+# memory per node
+#SBATCH --mem=4g
 
-# Maximum amount of time the job will be allowed to run
-# Recommended formats:  MM:SS, HH:MM:SS, DD-HH:MM
+#### Maximum amount of time the job will be allowed to run
+####    Recommended formats:  MM:SS, HH:MM:SS, DD-HH:MM
 #SBATCH --time=00:05:00
 
 # E-Mail notifications - possible options: NONE, BEGIN, END, FAIL, REQUEUE, ALL
@@ -47,5 +47,4 @@
 # Load the R module (not required for Biostat Cluster, but won't hurt)
 module load R
 
-# Run the script in R Batch Mode
-R CMD BATCH --no-save --no-restore script.R
+Rscript --vanilla script.R
