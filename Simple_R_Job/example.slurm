@@ -50,4 +50,4 @@
 # Load the R module (not required for Biostat Cluster, but won't hurt)
 module load R
 
-R CMD BATCH --no-save --no-restore script.R
+Rscript --vanilla script.R
