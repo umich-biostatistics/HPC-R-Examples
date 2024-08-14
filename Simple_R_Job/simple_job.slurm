@@ -50,4 +50,4 @@
 # Load the R module (not required for Biostat Cluster, but won't hurt)
 module load R
 
-Rscript --vanilla script.R
+Rscript --vanilla simple_script.R
