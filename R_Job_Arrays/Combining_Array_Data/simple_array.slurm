@@ -1,0 +1,1 @@
+../Simple_Array/simple_array.slurm

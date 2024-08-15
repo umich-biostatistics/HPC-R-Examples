@@ -1,0 +1,1 @@
+../Simple_Array/array_script.R
