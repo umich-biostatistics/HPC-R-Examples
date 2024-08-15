@@ -1,10 +1,13 @@
-# Get SLURM task ID variable from shell
 i <- Sys.getenv("SLURM_ARRAY_TASK_ID")
 
-# Output loop number based on SLURM task ID into R console
-output <- paste0("Entering loop number:", i)
+mtcars$mpg10 <- mtcars$mpg / 10
 
-# Wait for 5 minutes before saving - so we can see it in the squeue
-Sys.sleep(5)
+resampled_mtcars = mtcars[sample(nrow(mtcars),
+                                 replace = TRUE), ]
 
-save(output, file = paste0("Rdata/", i, ".Rdata"))
+fit = rstanarm::stan_glm(mpg10 ~ wt + cyl + am,
+                         data = resampled_mtcars,
+                         chains = 1,
+                         iter = 50000)
+
+save(fit, file = paste0(i, ".Rdata"))
