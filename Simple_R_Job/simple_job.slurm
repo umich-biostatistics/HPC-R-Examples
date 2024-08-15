@@ -12,7 +12,7 @@
 # %x represents the job name, and %j represents the job number
 # if you specify a directory, ensure it exists first with the mkdir -p command
 # at the begging of your list of commands torwards the bottom of this file.
-#SBATCH --output=%x-%j
+#SBATCH --output=%x-%j.out
 
 ## CPU Options ##
 # You will not need to use all of these at the same time typically.
