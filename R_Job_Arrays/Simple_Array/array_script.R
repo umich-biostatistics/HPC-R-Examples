@@ -10,4 +10,4 @@ fit = rstanarm::stan_glm(mpg10 ~ wt + cyl + am,
                          chains = 1,
                          iter = 50000)
 
-save(fit, file = paste0(i, ".Rdata"))
+save(fit, file = paste0("Rdata/", i, ".Rdata"))

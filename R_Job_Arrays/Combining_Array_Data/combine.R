@@ -4,7 +4,7 @@ results <- vector(mode = "list", 10L)
 # Loop through each file saved with save_objects.R
 # Place the data into the coresponding element in the list
 for (i in 1:10){
-  load(paste0("Rdata/", i, ".Rdata"))
+  load(paste0("../Simple_Array/Rdata/", i, ".Rdata"))
   results[[i]] <- output
 }
 

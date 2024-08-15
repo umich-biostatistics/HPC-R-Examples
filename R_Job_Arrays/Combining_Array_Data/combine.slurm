@@ -7,13 +7,13 @@
 #SBATCH --mail-type=ALL
 #SBATCH --mem=100m
 #SBATCH --cpus-per-task=1
-#SBATCH --output=s_out/%x_%j.out
+#SBATCH --output=log/%x_%j.out
 
 # Create directory for Rdata files, if not existing
-mkdir -p "$SLURM_SUBMIT_DIR"/Rdata/combined/ "$SLURM_SUBMIT_DIR"/r_out "$SLURM_SUBMIT_DIR"/s_out
+mkdir -p "$SLURM_SUBMIT_DIR"/Rdata/combined/ "$SLURM_SUBMIT_DIR"/log
 
 # Load the R module
 module load R
 
-# Run R script in batch mode and place 
-Rscript --vanilla combine.R ./r_out/"$SLURM_JOB_NAME"_"$SLURM_JOB_ID".Rout
+# Run R script
+Rscript --vanilla combine.R
