@@ -1,9 +1,9 @@
 # HPC R Examples
 
 > [!NOTE]
-> This branch contains slurm files specific to the **Great Lakes.**
->
-> Check branches for other HPC Clusters or environments
+> This branch contains slurm files specific to the **Biostat Cluster.**
+> 
+> Use `git clone -b biostat https://github.com/umich-biostatistics/HPC-R-Examples.git`
 
 ## Summary
 
