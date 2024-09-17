@@ -9,4 +9,4 @@
 
 ml R/4.4
 
-Rscript bs_parallel.R
+Rscript --no-save --no-restore bs_parallel.R

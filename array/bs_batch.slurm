@@ -8,4 +8,4 @@
 
 ml R/4.4
 
-Rscript bs_array.R
+Rscript --no-save --no-restore bs_array.R

@@ -8,4 +8,4 @@
 
 ml R/4.4
 
-Rscript bs_simple.R
+Rscript --no-save --no-restore bs_simple.R
