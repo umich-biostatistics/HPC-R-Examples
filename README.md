@@ -11,10 +11,8 @@ These are example R and SLURM scripts that can be used to show various methods o
 
 ## Examples
 
-| Job Type             | Definition                                                                            |
-| -------------------- | ------------------------------------------------------------------------------------- |
-| Simple R Job         | A simple R and SLURM script that shows how to run your code on the cluster            |
-| Saving Array Data    | Shows how to save the results of an R job array to multiple Rdata files               |
-| Combining Array Data | Shows how to combine the outputs of the above saved array results into one Rdata file |
-| run_workload         | An example bash script to run the save array job and combine array job in one go      |
-| for_loop             | An example for loop written in R                                                      |
+| Job Type     | Definition                                                                                         |
+| ------------ | -------------------------------------------------------------------------------------------------- |
+| simple       | A simple R and SLURM script that shows how to run your code on the cluster with no frills.         |
+| parallel     | how to run the same simple job, but use multiple cores to split up the work.                       |
+| array        | Split the simple job into a job array, spreading the work across multiple CPUs running in parallel |
