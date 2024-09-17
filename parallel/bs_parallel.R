@@ -53,7 +53,7 @@ results <- paste0(
   "95% Confidence Interval: ", ci[1], " - ", ci[2], "\n",
   "Number of cores used: ", n_cores, "\n",
   "Total bootstrap iterations: ", n_bootstrap, "\n",
-  "Runtime: ", speed["elapsed"]
+  "Runtime: ", speed["elapsed"], "\n"
 )
 
 # Create output directories

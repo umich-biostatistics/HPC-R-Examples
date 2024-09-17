@@ -25,7 +25,7 @@ results <- paste0(
   "Original data mean: ", mean(data), "\n",
   "Bootstrap mean: ", mean(bootstrap_means), "\n",
   "95% Confidence Interval: ", ci[1], " - ", ci[2], "\n",
-  "Runtime: ", speed["elapsed"]
+  "Runtime: ", speed["elapsed"], "\n"
 )
 
 # Print results to console and file

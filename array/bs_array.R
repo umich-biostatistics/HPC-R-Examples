@@ -38,7 +38,7 @@ summary <- paste0(
   "Number of bootstrap iterations: ", n_bootstrap_per_task, "\n",
   "Mean of bootstrap means: ", task_mean, "\n",
   "95% CI of bootstrap means: ", task_ci[1], " - ", task_ci[2], "\n",
-  "Runtime: ", speed["elapsed"]
+  "Runtime: ", speed["elapsed"], "\n"
 )
 
 # Save summary to a text file
