@@ -3,7 +3,7 @@
 > [!NOTE]
 > This branch contains slurm files specific to the **Great Lakes.**
 > 
-> Use `git clone --b GL_Bootstrap https://github.com/umich-biostatistics/HPC-R-Examples.git`
+> Use `git clone -b GL_Bootstrap https://github.com/umich-biostatistics/HPC-R-Examples.git`
 
 ## Summary
 
