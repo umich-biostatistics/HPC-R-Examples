@@ -8,6 +8,8 @@ if (!all(sapply(c("dplyr", "readr", "parallelly"), require, character.only = TRU
 library(dplyr)
 library(readr)
 
+directory_path <- "../csv/"
+
 # Function to combine CSV files
 combine_csv_files <- function(directory_path) {
   # Get list of CSV files in the directory
@@ -26,8 +28,6 @@ combine_csv_files <- function(directory_path) {
   return(combined_data)
 }
 
-# Example usage
-directory_path <- "../csv/"
 combined_data <- combine_csv_files(directory_path)
 
 # Optional: Write the combined data to a new CSV file
