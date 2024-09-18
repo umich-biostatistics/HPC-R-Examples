@@ -2,9 +2,12 @@
 
 # Parallel bootstrap analysis script using parallelly for cluster creation
 # and parallel for computation
+
+# Check for and install parallelly package
 if (!require(parallelly)) {
-  install.packages("parallelly")
+  install.packages("parallelly", repos = "https://repo.miserver.it.umich.edu/cran/", quietly = TRUE)
 }
+
 library(parallelly)
 library(parallel)
 
@@ -57,8 +60,8 @@ results <- paste0(
 )
 
 # Create output directories
-dir.create("summary")
-dir.create("csv")
+dir.create("summary", showWarnings = FALSE)
+dir.create("csv", showWarnings = FALSE)
 
 # Print results to console and file
 cat(results)
