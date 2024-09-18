@@ -9,6 +9,8 @@
 
 These are example R and SLURM scripts that can be used to show various methods of running jobs on an HPC cluster.
 
+The example performs a simple bootstrap analysis on a generated dataset. It's a basic example that doesn't require much computational power but can be time-consuming for large datasets or many bootstrap iterations.
+
 ## Examples
 
 | Job Type     | Definition                                                                                         |
