@@ -32,6 +32,3 @@ combined_data <- combine_csv_files(directory_path)
 
 # Optional: Write the combined data to a new CSV file
 write_csv(combined_data, "../csv/combined_output.csv")
-
-# Print the first few rows of the combined data
-print(head(combined_data))
