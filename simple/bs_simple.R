@@ -36,7 +36,7 @@ results <- paste0(
 writeLines(results, "summary/simple_bootstrap_results.txt")
 
 write.csv(data.frame(bootstrap_mean = bootstrap_means), 
-          file = "csv/bootstrap_means.csv", 
+          file = "csv/simple_bootstrap_means.csv", 
           row.names = FALSE)
 
 cat("Results have been saved to simple_bootstrap_results.txt\n")
