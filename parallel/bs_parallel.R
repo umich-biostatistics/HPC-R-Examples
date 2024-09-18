@@ -33,7 +33,7 @@ bootstrap_chunk <- function(chunk_id, n_bootstrap_per_chunk, data) {
 }
 
 # Set up parallel processing
-n_cores <- parallelly::availableCores() - 1  # Use all but one core
+n_cores <- parallelly::availableCores()
 n_bootstrap <- 50000
 n_chunks <- n_cores
 n_bootstrap_per_chunk <- n_bootstrap / n_chunks
@@ -46,9 +46,9 @@ clusterExport(cl, c("calc_mean", "bootstrap_chunk", "data", "n_bootstrap_per_chu
 
 # Perform parallel bootstrap
 speed <- system.time({
-  bootstrap_means <- unlist(parLapply(cl, 1:n_chunks, 
-                                      function(id) bootstrap_chunk(id, n_bootstrap_per_chunk, data)))
-
+ bootstrap_means <- unlist(parLapply(cl, 1:n_chunks, 
+                                     function(id) bootstrap_chunk(id, n_bootstrap_per_chunk, data)))
+  # bootstrap_means <- unlist(parLapply(cl, 1:n_chunks, bootstrap_chunk, n_bootstrap_per_chunk, data))
   # Calculate confidence interval
   ci <- quantile(bootstrap_means, c(0.025, 0.975))
 })
