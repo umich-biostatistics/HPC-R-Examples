@@ -18,3 +18,6 @@ The example performs a simple bootstrap analysis on a generated dataset. It's a 
 | simple       | A simple R and SLURM script that shows how to run your code on the cluster with no frills.         |
 | parallel     | how to run the same simple job, but use multiple cores to split up the work.                       |
 | array        | Split the simple job into a job array, spreading the work across multiple CPUs running in parallel |
+
+> [!TIP]
+> The Parallel example will used the UMICH CRAN mirror to install the `parallelly` package if not installed.
