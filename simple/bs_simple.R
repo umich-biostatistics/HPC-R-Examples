@@ -3,6 +3,10 @@
 # Set seed for reproducibility
 set.seed(123)
 
+# Create output directories
+dir.create("summary", showWarnings = FALSE)
+dir.create("csv", showWarnings = FALSE)
+
 # Generate sample data
 data <- rnorm(50000, mean = 5, sd = 2)
 
@@ -28,8 +32,11 @@ results <- paste0(
   "Runtime: ", speed["elapsed"], "\n"
 )
 
-# Print results to console and file
-dir.create("summary")
+# Save results to file
 writeLines(results, "summary/simple_bootstrap_results.txt")
+
+write.csv(data.frame(bootstrap_mean = bootstrap_means), 
+          file = "csv/bootstrap_means.csv", 
+          row.names = FALSE)
 
 cat("Results have been saved to simple_bootstrap_results.txt\n")

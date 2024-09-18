@@ -14,6 +14,10 @@ library(parallel)
 # Set seed for reproducibility
 set.seed(123)
 
+# Create output directories
+dir.create("summary", showWarnings = FALSE)
+dir.create("csv", showWarnings = FALSE)
+
 # Generate sample data (in real scenarios, you'd load your data here)
 data <- rnorm(50000, mean = 5, sd = 2)
 
@@ -58,10 +62,6 @@ results <- paste0(
   "Total bootstrap iterations: ", n_bootstrap, "\n",
   "Runtime: ", speed["elapsed"], "\n"
 )
-
-# Create output directories
-dir.create("summary", showWarnings = FALSE)
-dir.create("csv", showWarnings = FALSE)
 
 # Print results to console and file
 cat(results)

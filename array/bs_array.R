@@ -9,6 +9,10 @@ task_count <- as.integer(Sys.getenv("SLURM_ARRAY_TASK_COUNT"))
 # Set seed based on task ID for reproducibility
 set.seed(123 + task_id)
 
+# Create output directories
+dir.create("summary", showWarnings = FALSE)
+dir.create("csv", showWarnings = FALSE)
+
 # Generate sample data (in real scenarios, you'd load your data here)
 data <- rnorm(50000, mean = 5, sd = 2)
 
@@ -25,7 +29,6 @@ speed <- system.time({
 
 # Save detailed results for this task
 results <- data.frame(task_id = task_id, iteration = 1:n_bootstrap_per_task, mean = bootstrap_means)
-dir.create("csv")
 write.csv(results, file = paste0("csv/bootstrap_results_", task_id, ".csv"), row.names = FALSE)
 
 # Calculate summary statistics for this task
@@ -42,7 +45,6 @@ summary <- paste0(
 )
 
 # Save summary to a text file
-dir.create("summary")
 writeLines(summary, paste0("summary/bootstrap_summary_", task_id, ".txt"))
 
 cat("Task", task_id, "completed. Results and summary saved to files.\n")
