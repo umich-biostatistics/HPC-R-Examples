@@ -10,6 +10,6 @@ file_list <- list.files(
 combine_data <- rbindlist(lapply(file_list, fread))
 
 fwrite(combine_data, paste0(
-  "csv/combined_output_",
+  "../csv/combined_output_",
   job_id,
   ".csv"))
