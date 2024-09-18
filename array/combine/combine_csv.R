@@ -13,7 +13,7 @@ directory_path <- "../csv/"
 # Function to combine CSV files
 combine_csv_files <- function(directory_path) {
   # Get list of CSV files in the directory
-  csv_files <- list.files(path = directory_path, pattern = "bootstrap_results_*.csv", full.names = TRUE)
+  csv_files <- list.files(path = directory_path, pattern = "^bootstrap_results_.*\\.csv$", full.names = TRUE)
   
   # Check if any CSV files were found
   if (length(csv_files) == 0) {
