@@ -11,6 +11,6 @@
 # ! Make sure to update this with the proper SLURM account!
 #SBATCH --account=SLURM_ACCOUNT
 
-ml R/4.4
+ml Rtidyverse/4.4
 
 Rscript --vanilla combine_csv.R
