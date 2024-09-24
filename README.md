@@ -29,6 +29,7 @@ The examples perform a simple bootstrap analysis on a generated dataset. It's a 
 3. `git clone -b GL_Bootstrap https://github.com/umich-biostatistics/HPC-R-Examples.git`
 4. `cd` into one of the examples
 5. Update `.slurm` file with the appropraite SLURM account
-6. `sbatch bs_EXAMPLE.slurm` (replace EXAMPLE with proper name)
-7. `sq` to view your job queue
-8. Once complete, `my_job_statistics JOB_ID` (replace JOB_ID with that of your job)
+   - `find . -type f -name "*.slurm" -exec sed -i 's/SLURM_ACCOUNT/your_account_here/g' {} +`
+7. `sbatch bs_EXAMPLE.slurm` (replace EXAMPLE with proper name)
+8. `sq` to view your job queue
+9. Once complete, `my_job_statistics JOB_ID` (replace JOB_ID with that of your job)
