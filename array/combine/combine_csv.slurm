@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=combine_csv
-#SBATCH --output=log/%x-%j.out
+#SBATCH --output=logs/%j.out
 #SBATCH --ntasks=1
 #SBATCH --time=00:05:00
 #SBATCH --mem=1g
