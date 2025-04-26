@@ -39,6 +39,6 @@ Thumbs.db
 # Repo Specific #
 #################
 summary/
-csv/
-log/
+output/
+logs/
 .Rproj.user
