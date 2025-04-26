@@ -1,12 +1,13 @@
 #!/bin/bash
+
 #SBATCH --job-name=bootstrap_array
 #SBATCH --output=logs/%A/bootstrap_%a.out
 #SBATCH --array=1-10
 #SBATCH --ntasks=1
-#SBATCH --time=00:05:00
+#SBATCH --time=00:01:00
 #SBATCH --mem=1g
 #SBATCH --partition=standard
-#SBATCH --mail-type=ALL
+#SBATCH --mail-type=FAILED,END
 
 # ! Make sure to update this with the proper SLURM account!
 #SBATCH --account=SLURM_ACCOUNT
