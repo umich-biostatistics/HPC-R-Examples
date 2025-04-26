@@ -5,13 +5,17 @@
 # Get the task ID from SLURM_ARRAY_TASK_ID
 task_id <- as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 task_count <- as.integer(Sys.getenv("SLURM_ARRAY_TASK_COUNT"))
+job_id <- as.integer(Sys.getenv("SLURM_ARRAY_JOB_ID"))
 
 # Set seed based on task ID for reproducibility
 set.seed(123 + task_id)
 
 # Create output directories
-dir.create("summary", showWarnings = FALSE)
-dir.create("csv", showWarnings = FALSE)
+output_dir <- file.path(getwd(), "output", job_id)
+summary_dir <- file.path(getwd(), "summary", job_id)
+
+dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
+dir.create(summary_dir, showWarnings = FALSE, recursive = TRUE)
 
 # Generate sample data (in real scenarios, you'd load your data here)
 data <- rnorm(50000, mean = 5, sd = 2)
@@ -23,13 +27,25 @@ calc_mean <- function(x) {
 
 # Perform bootstrap for this task
 n_bootstrap_per_task <- 50000 / task_count
+
 speed <- system.time({
-  bootstrap_means <- replicate(n_bootstrap_per_task, calc_mean(sample(data, replace = TRUE)))
+  bootstrap_means <- replicate(
+    n_bootstrap_per_task,
+    calc_mean(sample(data, replace = TRUE))
+  )
 })
 
 # Save detailed results for this task
-results <- data.frame(task_id = task_id, iteration = 1:n_bootstrap_per_task, mean = bootstrap_means)
-write.csv(results, file = paste0("csv/bootstrap_results_", task_id, ".csv"), row.names = FALSE)
+results <- data.frame(
+  task_id = task_id,
+  iteration = 1:n_bootstrap_per_task,
+  mean = bootstrap_means
+)
+write.csv(
+  results,
+  file = paste0(output_dir, "/bootstrap_results_", task_id, ".csv"),
+  row.names = FALSE
+)
 
 # Calculate summary statistics for this task
 task_mean <- mean(bootstrap_means)
@@ -37,6 +53,7 @@ task_ci <- quantile(bootstrap_means, c(0.025, 0.975))
 
 # Create summary string
 summary <- paste0(
+  "Job ID: ", job_id, "\n",
   "Task ID: ", task_id, " of ", task_count, "\n",
   "Number of bootstrap iterations: ", n_bootstrap_per_task, "\n",
   "Mean of bootstrap means: ", task_mean, "\n",
@@ -45,7 +62,16 @@ summary <- paste0(
 )
 
 # Save summary to a text file
-writeLines(summary, paste0("summary/bootstrap_summary_", task_id, ".txt"))
+writeLines(
+  summary,
+  paste0(summary_dir, "/bootstrap_summary_", task_id, ".txt")
+)
+
+
+cat(
+  "Summary saved to:",
+  paste0(summary_dir, "/bootstrap_summary_", task_id, ".txt"),
+  "\n"
+)
 
 cat("Task", task_id, "completed. Results and summary saved to files.\n")
-
