@@ -22,7 +22,7 @@ echo "Submitting combine job with dependency on array job..."
 COMBINE_JOB_ID=$(cd array/combine \
                     && sbatch \
                     --parsable \
-                    --dependency=afterok:$ARRAY_JOB_ID \
+                    --dependency=afterok:"$ARRAY_JOB_ID" \
                     combine_csv.slurm)
 echo "Combine job submitted with ID: $COMBINE_JOB_ID"
 
