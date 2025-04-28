@@ -6,7 +6,7 @@
 #SBATCH --time=00:05:00
 #SBATCH --mem=1g
 #SBATCH --partition=standard
-#SBATCH --mail-type=ALL
+#SBATCH --mail-type=FAIL,END
 
 mkdir -p logs
 
