@@ -1,8 +1,5 @@
 #!/bin/bash
 
-SCRIPT_DIR="$(find . -type f -name "combine_csv.R" -exec dirname {} \;)"
-cd "$SCRIPT_DIR" || exit 1
-
 #SBATCH --job-name=combine_csv
 #SBATCH --output=logs/%x/%j.out
 #SBATCH --ntasks=1
@@ -13,6 +10,11 @@ cd "$SCRIPT_DIR" || exit 1
 
 # ! Make sure to update this with the proper SLURM account!
 #SBATCH --account=SLURM_ACCOUNT
+
+mkdir -p logs
+
+SCRIPT_DIR="$(find . -type f -name "combine_csv.R" -exec dirname {} \;)"
+cd "$SCRIPT_DIR" || exit 1
 
 ml Rtidyverse/4.4
 

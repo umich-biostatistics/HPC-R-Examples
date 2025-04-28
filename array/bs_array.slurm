@@ -1,8 +1,5 @@
 #!/bin/bash
 
-SCRIPT_DIR="$(find . -type f -name "bs_array.R" -exec dirname {} \;)"
-cd "$SCRIPT_DIR" || exit 1
-
 #SBATCH --job-name=bootstrap_array
 #SBATCH --output=logs/%x/%A/bootstrap_%a.out
 #SBATCH --array=1-10
@@ -14,6 +11,11 @@ cd "$SCRIPT_DIR" || exit 1
 
 # ! Make sure to update this with the proper SLURM account!
 #SBATCH --account=SLURM_ACCOUNT
+
+mkdir -p logs
+
+SCRIPT_DIR="$(find . -type f -name "bs_array.R" -exec dirname {} \;)"
+cd "$SCRIPT_DIR" || exit 1
 
 ml R/4.4
 
