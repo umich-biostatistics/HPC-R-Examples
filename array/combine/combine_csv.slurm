@@ -8,14 +8,11 @@
 #SBATCH --partition=standard
 #SBATCH --mail-type=FAILED,END
 
-# ! Make sure to update this with the proper SLURM account!
-#SBATCH --account=SLURM_ACCOUNT
-
 mkdir -p logs
 
 SCRIPT_DIR="$(find . -type f -name "combine_csv.R" -exec dirname {} \;)"
 cd "$SCRIPT_DIR" || exit 1
 
-ml Rtidyverse/4.4
+ml R/4.4
 
 Rscript --vanilla combine_csv.R

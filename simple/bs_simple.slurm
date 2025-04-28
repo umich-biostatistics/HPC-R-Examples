@@ -8,9 +8,6 @@
 #SBATCH --partition=standard
 #SBATCH --mail-type=ALL
 
-# ! Make sure to update this with the proper SLURM account!
-#SBATCH --account=SLURM_ACCOUNT
-
 mkdir -p logs
 
 SCRIPT_DIR="$(find . -type f -name "bs_simple.R" -exec dirname {} \;)"
