@@ -28,15 +28,10 @@ dir.create(output_dir, showWarnings = FALSE)
 # Generate sample data (in real scenarios, you'd load your data here)
 data <- rnorm(50000, mean = 5, sd = 2)
 
-# Function to calculate mean
-calc_mean <- function(x) {
-  mean(x)
-}
-
 # Function to perform bootstrap on a chunk of data
 bootstrap_chunk <- function(chunk_id, n_bootstrap_per_chunk, data) {
   set.seed(123 + chunk_id)  # Ensure reproducibility for each chunk
-  replicate(n_bootstrap_per_chunk, calc_mean(sample(data, replace = TRUE)))
+  replicate(n_bootstrap_per_chunk, mean(sample(data, replace = TRUE)))
 }
 
 # Set up parallel processing
@@ -50,7 +45,7 @@ cl <- parallelly::makeClusterPSOCK(n_cores, autoStop = TRUE)
 
 # Export necessary functions and data to the cluster
 clusterExport(
-  cl, c("calc_mean", "bootstrap_chunk", "data", "n_bootstrap_per_chunk")
+  cl, c("bootstrap_chunk", "data", "n_bootstrap_per_chunk")
 )
 
 # Perform parallel bootstrap
