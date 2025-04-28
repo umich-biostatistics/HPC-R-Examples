@@ -4,8 +4,11 @@
 set.seed(123)
 
 # Create output directories
-dir.create("summary", showWarnings = FALSE)
-dir.create("csv", showWarnings = FALSE)
+output_dir <- file.path(getwd(), "output", job_id)
+summary_dir <- file.path(getwd(), "summary", job_id)
+
+dir.create(summary_dir, showWarnings = FALSE)
+dir.create(output_dir, showWarnings = FALSE)
 
 # Generate sample data
 data <- rnorm(50000, mean = 5, sd = 2)
@@ -17,9 +20,11 @@ calc_mean <- function(x) {
 
 # Perform bootstrap
 n_bootstrap <- 50000
+
 speed <- system.time({
-  bootstrap_means <- replicate(n_bootstrap, calc_mean(sample(data, replace = TRUE)))
-  
+  bootstrap_means <- replicate(
+    n_bootstrap, calc_mean(sample(data, replace = TRUE))
+  )
   # Calculate confidence interval
   ci <- quantile(bootstrap_means, c(0.025, 0.975))
 })
@@ -33,10 +38,10 @@ results <- paste0(
 )
 
 # Save results to file
-writeLines(results, "summary/simple_bootstrap_results.txt")
+writeLines(results, file.path(summary_dir, "simple_bootstrap_results.txt"))
 
-write.csv(data.frame(bootstrap_mean = bootstrap_means), 
-          file = "csv/simple_bootstrap_means.csv", 
+write.csv(data.frame(bootstrap_mean = bootstrap_means),
+          file = file.path(output_dir, "simple_bootstrap_means.csv"),
           row.names = FALSE)
 
 cat("Results have been saved to simple_bootstrap_results.txt\n")
