@@ -1,8 +1,5 @@
 #!/bin/bash
 
-SCRIPT_DIR="$(find . -type f -name "bs_parallel.R" -exec dirname {} \;)"
-cd "$SCRIPT_DIR" || exit 1
-
 #SBATCH --job-name=bs_parallel
 #SBATCH --output=logs/%x/%j.out
 #SBATCH --ntasks=1
