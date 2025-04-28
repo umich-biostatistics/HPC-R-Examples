@@ -8,8 +8,8 @@ job_id <- as.integer(Sys.getenv("SLURM_JOB_ID"))
 output_dir <- file.path(getwd(), "output", job_id)
 summary_dir <- file.path(getwd(), "summary", job_id)
 
-dir.create(summary_dir, showWarnings = FALSE)
-dir.create(output_dir, showWarnings = FALSE)
+dir.create(summary_dir, showWarnings = FALSE, recursive = TRUE)
+dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
 # Generate sample data
 data <- rnorm(50000, mean = 5, sd = 2)
