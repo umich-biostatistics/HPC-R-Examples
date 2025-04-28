@@ -19,6 +19,8 @@ library(parallel)
 set.seed(123)
 
 # Create output directories
+job_id <- as.integer(Sys.getenv("SLURM_ARRAY_JOB_ID"))
+
 output_dir <- file.path(getwd(), "output", job_id)
 summary_dir <- file.path(getwd(), "summary", job_id)
 
