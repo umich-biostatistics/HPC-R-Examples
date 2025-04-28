@@ -19,8 +19,11 @@ library(parallel)
 set.seed(123)
 
 # Create output directories
-dir.create("summary", showWarnings = FALSE)
-dir.create("csv", showWarnings = FALSE)
+output_dir <- file.path(getwd(), "output", job_id)
+summary_dir <- file.path(getwd(), "summary", job_id)
+
+dir.create(summary_dir, showWarnings = FALSE)
+dir.create(output_dir, showWarnings = FALSE)
 
 # Generate sample data (in real scenarios, you'd load your data here)
 data <- rnorm(50000, mean = 5, sd = 2)
@@ -75,12 +78,12 @@ results <- paste0(
 
 # Print results to console and file
 cat(results)
-writeLines(results, "summary/parallel_bootstrap_results.txt")
+writeLines(results, file.path(summary_dir, "parallel_bootstrap_results.txt"))
 
 # Save detailed bootstrap means to CSV
-write.csv(data.frame(bootstrap_mean = bootstrap_means), 
-          file = "csv/parallel_bootstrap_means.csv", 
+write.csv(data.frame(bootstrap_mean = bootstrap_means),
+          file = file.path("csv", "parallel_bootstrap_means.csv"),
           row.names = FALSE)
 
-cat("Results have been saved to parallel_bootstrap_results.txt\n")
-cat("Detailed bootstrap means have been saved to parallel_bootstrap_means.csv\n")
+cat("Results have been saved to", file.path(summary_dir, "parallel_bootstrap_results.txt"), "\n")
+cat("Detailed bootstrap means have been saved to", file.path("csv", "parallel_bootstrap_means.csv"), "\n")
