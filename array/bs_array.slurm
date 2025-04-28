@@ -1,7 +1,10 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(find . -type f -name "bs_array.R" -exec dirname {} \;)"
+cd "$SCRIPT_DIR" || exit 1
+
 #SBATCH --job-name=bootstrap_array
-#SBATCH --output=logs/%A/bootstrap_%a.out
+#SBATCH --output=logs/%x/%A/bootstrap_%a.out
 #SBATCH --array=1-10
 #SBATCH --ntasks=1
 #SBATCH --time=00:01:00

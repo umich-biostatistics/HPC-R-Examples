@@ -1,7 +1,10 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(find . -type f -name "combine_csv.R" -exec dirname {} \;)"
+cd "$SCRIPT_DIR" || exit 1
+
 #SBATCH --job-name=combine_csv
-#SBATCH --output=logs/%j.out
+#SBATCH --output=logs/%x/%j.out
 #SBATCH --ntasks=1
 #SBATCH --time=00:01:00
 #SBATCH --mem=1g

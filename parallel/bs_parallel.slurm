@@ -1,7 +1,10 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(find . -type f -name "bs_parallel.R" -exec dirname {} \;)"
+cd "$SCRIPT_DIR" || exit 1
+
 #SBATCH --job-name=bs_parallel
-#SBATCH --output=log/%x-%j.out
+#SBATCH --output=log/%x/%j.out
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --time=00:05:00
