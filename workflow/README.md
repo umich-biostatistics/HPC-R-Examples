@@ -24,4 +24,4 @@ bash array_workflow.sh
 
 ## Monitoring
 
-After running the workflow, you can monitor the job status with the `sq` command. The workflow will create a directory structure under `array/output/` with a timestamp-based folder containing all bootstrap results and a `combined/` subdirectory for the final combined results.
+After running the workflow, you can monitor the job status with the `sq` command. The workflow will create a directory structure under `array/output/` with a jobID-based folder containing all bootstrap results and a `combined/` subdirectory for the final combined results.

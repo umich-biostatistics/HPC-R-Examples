@@ -5,7 +5,11 @@
 
 # Check for and install parallelly package
 if (!require(parallelly)) {
-  install.packages("parallelly", repos = "https://repo.miserver.it.umich.edu/cran/", quietly = TRUE)
+  install.packages(
+    "parallelly",
+    repos = "https://repo.miserver.it.umich.edu/cran/",
+    quietly = TRUE
+  )
 }
 
 library(parallelly)
@@ -42,13 +46,19 @@ n_bootstrap_per_chunk <- n_bootstrap / n_chunks
 cl <- parallelly::makeClusterPSOCK(n_cores, autoStop = TRUE)
 
 # Export necessary functions and data to the cluster
-clusterExport(cl, c("calc_mean", "bootstrap_chunk", "data", "n_bootstrap_per_chunk"))
+clusterExport(
+  cl, c("calc_mean", "bootstrap_chunk", "data", "n_bootstrap_per_chunk")
+)
 
 # Perform parallel bootstrap
 speed <- system.time({
- bootstrap_means <- unlist(parLapply(cl, 1:n_chunks, 
-                                     function(id) bootstrap_chunk(id, n_bootstrap_per_chunk, data)))
-  # bootstrap_means <- unlist(parLapply(cl, 1:n_chunks, bootstrap_chunk, n_bootstrap_per_chunk, data))
+  bootstrap_means <- unlist(
+    parLapply(
+      cl,
+      1:n_chunks,
+      function(id) bootstrap_chunk(id, n_bootstrap_per_chunk, data)
+    )
+  )
   # Calculate confidence interval
   ci <- quantile(bootstrap_means, c(0.025, 0.975))
 })
