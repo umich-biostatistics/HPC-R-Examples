@@ -21,7 +21,7 @@ set.seed(123)
 # Create output directories
 job_id <- as.integer(Sys.getenv("SLURM_JOB_ID"))
 
-output_dir <- file.path(getwd(), "output", job_id)
+output_dir <- file.path(getwd(), "output", job_id, "csv")
 summary_dir <- file.path(getwd(), "summary", job_id)
 
 dir.create(summary_dir, showWarnings = FALSE, recursive = TRUE)
@@ -79,8 +79,8 @@ writeLines(results, file.path(summary_dir, "parallel_bootstrap_results.txt"))
 
 # Save detailed bootstrap means to CSV
 write.csv(data.frame(bootstrap_mean = bootstrap_means),
-          file = file.path("csv", "parallel_bootstrap_means.csv"),
+          file = file.path(output_dir, "parallel_bootstrap_means.csv"),
           row.names = FALSE)
 
 cat("Results have been saved to", file.path(summary_dir, "parallel_bootstrap_results.txt"), "\n")
-cat("Detailed bootstrap means have been saved to", file.path("csv", "parallel_bootstrap_means.csv"), "\n")
+cat("Detailed bootstrap means have been saved to", file.path(output_dir, "parallel_bootstrap_means.csv"), "\n")
