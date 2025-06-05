@@ -69,6 +69,8 @@ main <- function() {
   # Get SLURM array task ID for reproducible seeding and file naming
   task_id <- Sys.getenv("SLURM_ARRAY_TASK_ID", unset = "1")
   task_id_num <- as.numeric(task_id)
+  job_id <- Sys.getenv("SLURM_ARRAY_JOB_ID", unset = "1234")
+
 
   # Example: Simple simulation or analysis
   set.seed(task_id_num)  # Use SLURM task ID for reproducible but unique results
@@ -81,7 +83,7 @@ main <- function() {
   cat("  range: [", round(min(samples), 4), ",", round(max(samples), 4), "]\n")
 
   # Create output directories
-  output_dir <- file.path("output", task_id)
+  output_dir <- file.path("output", job_id)
   dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
 
   # Save results to file using SLURM task ID
