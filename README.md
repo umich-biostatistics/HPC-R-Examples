@@ -25,6 +25,11 @@ This repository provides example R and SLURM scripts demonstrating several metho
   - **combine/**: Combine results from array jobs
     - `combine_csv.R`: R script to merge CSV outputs from all array jobs
     - `combine_csv.slurm`: SLURM script to run the combine step
+  - **read_from_csv/**: Example of a SLURM array job where each task reads parameters from a CSV file
+    - `vars_from_csv.R`: Sample R script that processes parameters from a CSV file
+    - `vars_from_csv.slurm`: SLURM batch script that reads CSV parameters for each array task
+    - `params.csv`: Example CSV file with parameter sets
+    - `README.md`: Details on using CSV input with SLURM array jobs
 
 - **workflow/**: Workflow automation
   - `array_workflow.sh`: Bash script to submit the array job and then the combine job with dependency handling
