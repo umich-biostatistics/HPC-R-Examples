@@ -1,5 +1,5 @@
 # example_script.R
-# Example R script to use with vars_from_csv.slrum
+# Example R script to use with vars_from_csv.slurm
 
 # Enhanced argument parsing with error handling
 parse_args <- function(args) {
@@ -13,7 +13,7 @@ parse_args <- function(args) {
     } else if (grepl("^--beta_mag=", arg)) {
       params$beta_mag <- as.numeric(sub("^--beta_mag=", "", arg))
     } else if (arg %in% c("-h", "--help")) {
-      cat("Usage: Rscript example_script.R --sigma=<value> --beta_mag=<value>\n")
+      cat("Usage: Rscript example_script.R --sigma=<value> --beta_mag=<value>\n") # nolint
       cat("  --sigma     : Sigma parameter (numeric)\n")
       cat("  --beta_mag  : Beta magnitude parameter (numeric)\n")
       cat("  --help, -h  : Show this help message\n")
@@ -80,8 +80,12 @@ main <- function() {
   cat("  sd:", round(sd(samples), 4), "\n")
   cat("  range: [", round(min(samples), 4), ",", round(max(samples), 4), "]\n")
 
+  # Create output directories
+  output_dir <- file.path("output", task_id)
+  dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
+
   # Save results to file using SLURM task ID
-  output_file <- paste0("results_task_", task_id, ".csv")
+  output_file <- file.path(output_dir, paste0("results_task_", task_id, ".csv"))
   results_df <- data.frame(
     sigma = params$sigma,
     beta_mag = params$beta_mag,
