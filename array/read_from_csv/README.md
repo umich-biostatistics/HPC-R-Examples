@@ -3,8 +3,8 @@
 This example demonstrates how to run a SLURM array job where each task reads parameters from a CSV file and passes them to an R script. It is useful for running parameter sweeps or simulations with varying input values.
 
 ## Files Included
-- `vars_from_csv.slrum` - SLURM batch script that reads CSV parameters
-- `example_script.R` - Sample R script that processes the parameters
+- `vars_from_csv.slurm` - SLURM batch script that reads CSV parameters
+- `vars_from_csv.R` - Sample R script that processes the parameters
 - `params.csv` - Example CSV file with 3 parameter sets
 - `logs/` - Directory for SLURM output files
 
@@ -24,7 +24,7 @@ This example demonstrates how to run a SLURM array job where each task reads par
 To test the example:
 
 ```bash
-sbatch vars_from_csv.slrum
+sbatch vars_from_csv.slurm
 ```
 
 This will run 3 array tasks (one for each row in `params.csv`) and produce:
@@ -35,7 +35,7 @@ This will run 3 array tasks (one for each row in `params.csv`) and produce:
 ## Usage
 1. **Edit the Script**
    - Set `CSV_FILE` to the path of your parameter CSV file (default: `params.csv`)
-   - Set the `Rscript` command and script name as needed (default: `example_script.R`)
+   - Set the `Rscript` command and script name as needed (default: `vars_from_csv.R`)
    - Adjust the `#SBATCH --array=1-3` line to match the number of rows in your CSV
 
 2. **CSV File Format**
@@ -47,7 +47,7 @@ This will run 3 array tasks (one for each row in `params.csv`) and produce:
 3. **Submit the Job**
 
    ```bash
-   sbatch vars_from_csv.slrum
+   sbatch vars_from_csv.slurm
    ```
 
 4. **Output**
@@ -56,7 +56,7 @@ This will run 3 array tasks (one for each row in `params.csv`) and produce:
 
 ## Example R Script Features
 
-The included `example_script.R` demonstrates:
+The included `vars_from_csv.R` demonstrates:
 
 - Robust argument parsing with help and error handling
 - SLURM-aware random seeding using `SLURM_ARRAY_TASK_ID`
