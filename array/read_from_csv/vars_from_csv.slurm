@@ -1,6 +1,5 @@
 #!/bin/bash
 
-#SBATCH --array=1-3
 #SBATCH --job-name=param_array
 #SBATCH --output=logs/output_%A_%a.out
 #SBATCH --array=1-3
