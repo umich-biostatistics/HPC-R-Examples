@@ -8,9 +8,6 @@
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=2G
 
-# ! Make sure to update this with the proper SLURM account!
-#SBATCH --account=SLURM_ACCOUNT
-
 # If submitting from outside of base directory, this will find and change to
 # the base before running, i.e. HPC-R-Examples/array/read_from_csv/
 SCRIPT_DIR="$(find . -type f -name "vars_from_csv.R" -exec dirname {} \;)"
