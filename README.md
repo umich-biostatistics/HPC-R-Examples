@@ -49,15 +49,13 @@ This repository provides example R and SLURM scripts demonstrating several metho
 > [!TIP]
 > The parallel and combine examples will use the UMICH CRAN mirror to install required R packages if not already installed.
 
-1. Connect to a terminal session on `greatlakes.arc-ts.umich.edu`
+1. Connect to a terminal session on `biostat-login.sph.umich.edu`
 2. `cd` into the desired directory
 3. `git clone` this repository
 4. `cd` into one of the example folders (e.g., `simple`, `parallel`, `array`)
-5. Update `.slurm` files with the appropriate SLURM account:
-   - `find . -type f -name "*.slurm" -exec sed -i 's/SLURM_ACCOUNT/your_account_here/g' {} +`
-6. Submit a job: `sbatch bs_EXAMPLE.slurm` (replace EXAMPLE with the appropriate name)
-7. Use `sq` to view your job queue
-8. Once complete, use `my_job_statistics JOB_ID` (replace JOB_ID with your job's ID)
+5. Submit a job: `sbatch bs_EXAMPLE.slurm` (replace EXAMPLE with the appropriate name)
+6. Use `sq` to view your job queue
+7. Once complete, use `seff JOB_ID` (replace JOB_ID with your job's ID)
 
 ### Workflow Automation
 
