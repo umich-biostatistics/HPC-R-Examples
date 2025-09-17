@@ -14,9 +14,6 @@
 
 mkdir -p logs
 
-SCRIPT_DIR="$(find . -type f -name "bs_array.R" -exec dirname {} \;)"
-cd "$SCRIPT_DIR" || exit 1
-
 ml R/4.4
 
 Rscript --vanilla bs_array.R

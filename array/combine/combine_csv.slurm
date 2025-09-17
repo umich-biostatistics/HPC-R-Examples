@@ -13,9 +13,6 @@
 
 mkdir -p logs
 
-SCRIPT_DIR="$(find . -type f -name "combine_csv.R" -exec dirname {} \;)"
-cd "$SCRIPT_DIR" || exit 1
-
 ml Rtidyverse/4.4
 
 Rscript --vanilla combine_csv.R
