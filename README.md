@@ -15,9 +15,9 @@ This repository provides example R and SLURM scripts demonstrating several metho
   - `bs_simple.R`: R script for bootstrap analysis
   - `bs_simple.slurm`: SLURM script to submit the job
 
-- **parallel/**: Multi-core parallel bootstrap example
-  - `bs_parallel.R`: Uses the `parallelly` and `parallel` R packages to distribute work across available cores
-  - `bs_parallel.slurm`: SLURM script to request multiple cores
+- **multicore/**: Multi-core bootstrap example
+  - `bs_multicore.R`: Uses the `parallelly` and `parallel` R packages to distribute work across available cores
+  - `bs_multicore.slurm`: SLURM script to request multiple cores
 
 - **array/**: Job array example for distributing bootstrap tasks
   - `bs_array.R`: R script that runs a portion of the bootstrap, using SLURM array task IDs

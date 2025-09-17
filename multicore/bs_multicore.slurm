@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=bs_parallel
+#SBATCH --job-name=bs_multicore
 #SBATCH --output=logs/%x/%j.out
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
@@ -16,4 +16,4 @@ mkdir -p logs
 
 ml R/4.4
 
-Rscript --vanilla bs_parallel.R
+Rscript --vanilla bs_multicore.R
