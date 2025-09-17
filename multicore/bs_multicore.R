@@ -34,7 +34,7 @@ data <- rnorm(50000, mean = 5, sd = 2)
 
 # Function to perform bootstrap on a chunk of data
 bootstrap_chunk <- function(chunk_id, n_bootstrap_per_chunk, data) {
-  set.seed(job_id + chunk_id)  # Ensure reproducibility for each chunk
+  set.seed(job_id + chunk_id)
   replicate(n_bootstrap_per_chunk, mean(sample(data, replace = TRUE)))
 }
 
@@ -49,7 +49,7 @@ cl <- parallelly::makeClusterPSOCK(n_cores, autoStop = TRUE)
 
 # Export necessary functions and data to the cluster
 clusterExport(
-  cl, c("bootstrap_chunk", "data", "n_bootstrap_per_chunk")
+  cl, c("bootstrap_chunk", "data", "n_bootstrap_per_chunk", "job_id")
 )
 
 # Perform parallel bootstrap
