@@ -53,8 +53,11 @@ This repository provides example R and SLURM scripts demonstrating several metho
 2. `cd` into the desired directory
 3. `git clone` this repository
 4. `cd` into one of the example folders (e.g., `simple`, `parallel`, `array`)
-5. Update `.slurm` files with the appropriate SLURM account:
-   - `find . -type f -name "*.slurm" -exec sed -i 's/SLURM_ACCOUNT/your_account_here/g' {} +`
+5. Update `.slurm` files with the appropriate SLURM account
+   - Tip: use the following command to change all `.slurm` files, entering the desired account in the "your_account_here" portion:
+   ```bash
+   find . -type f -name "*.slurm" -exec sed -i 's/SLURM_ACCOUNT/your_account_here/g' {} +
+   ```
 6. Submit a job: `sbatch bs_EXAMPLE.slurm` (replace EXAMPLE with the appropriate name)
 7. Use `sq` to view your job queue
 8. Once complete, use `my_job_statistics JOB_ID` (replace JOB_ID with your job's ID)
