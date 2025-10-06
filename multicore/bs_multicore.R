@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 
-# Parallel bootstrap analysis script using parallelly for cluster creation
+# Multicore bootstrap analysis script using parallelly for cluster creation
 # and parallel for computation
 
 # Check for and install parallelly package
@@ -15,12 +15,14 @@ if (!require(parallelly)) {
 library(parallelly)
 library(parallel)
 
-# Set seed for reproducibility
-set.seed(123)
-
-# Create output directories
+# SLURM job ID is read in from the environment for later use
 job_id <- as.integer(Sys.getenv("SLURM_JOB_ID"))
 
+# Set global seed for reproducibility of data generation
+# Note: Per-chunk seeds are set later inside the bootstrap_chunk function
+set.seed(job_id)
+
+# Create output directories
 output_dir <- file.path(getwd(), "output", job_id, "csv")
 summary_dir <- file.path(getwd(), "summary", job_id)
 
@@ -32,7 +34,7 @@ data <- rnorm(50000, mean = 5, sd = 2)
 
 # Function to perform bootstrap on a chunk of data
 bootstrap_chunk <- function(chunk_id, n_bootstrap_per_chunk, data) {
-  set.seed(123 + chunk_id)  # Ensure reproducibility for each chunk
+  set.seed(job_id + chunk_id)
   replicate(n_bootstrap_per_chunk, mean(sample(data, replace = TRUE)))
 }
 
@@ -47,7 +49,7 @@ cl <- parallelly::makeClusterPSOCK(n_cores, autoStop = TRUE)
 
 # Export necessary functions and data to the cluster
 clusterExport(
-  cl, c("bootstrap_chunk", "data", "n_bootstrap_per_chunk")
+  cl, c("bootstrap_chunk", "data", "n_bootstrap_per_chunk", "job_id")
 )
 
 # Perform parallel bootstrap
@@ -75,12 +77,12 @@ results <- paste0(
 
 # Print results to console and file
 cat(results)
-writeLines(results, file.path(summary_dir, "parallel_bootstrap_results.txt"))
+writeLines(results, file.path(summary_dir, "multicore_bootstrap_results.txt"))
 
 # Save detailed bootstrap means to CSV
 write.csv(data.frame(bootstrap_mean = bootstrap_means),
-          file = file.path(output_dir, "parallel_bootstrap_means.csv"),
+          file = file.path(output_dir, "multicore_bootstrap_means.csv"),
           row.names = FALSE)
 
-cat("Results have been saved to", file.path(summary_dir, "parallel_bootstrap_results.txt"), "\n")
-cat("Detailed bootstrap means have been saved to", file.path(output_dir, "parallel_bootstrap_means.csv"), "\n")
+cat("Results have been saved to", file.path(summary_dir, "multicore_bootstrap_results.txt"), "\n")
+cat("Detailed bootstrap means have been saved to", file.path(output_dir, "multicore_bootstrap_means.csv"), "\n")
