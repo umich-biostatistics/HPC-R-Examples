@@ -42,3 +42,9 @@ summary/
 output/
 logs/
 .Rproj.user
+
+# App Files #
+#############
+.posit/
+.snakemake/
+.vscode/
