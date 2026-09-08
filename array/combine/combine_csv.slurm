@@ -1,18 +1,19 @@
 #!/bin/bash
-
 #SBATCH --job-name=combine_csv
-#SBATCH --output=logs/%x/%j.out
+#SBATCH --output=%x-%j.out
+#SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --time=00:01:00
-#SBATCH --mem=1g
+#SBATCH --cpus-per-task=1
+#SBATCH --time=00:05:00
+#SBATCH --mem=1G
 #SBATCH --partition=standard
-#SBATCH --mail-type=FAILED,END
-
-# ! Make sure to update this with the proper SLURM account!
+#SBATCH --mail-type=FAIL,END
+# Replace SLURM_ACCOUNT with your allocation before submitting.
 #SBATCH --account=SLURM_ACCOUNT
 
-mkdir -p logs
-
-ml Rtidyverse/4.4
-
+set -euo pipefail
+# Submit from this example's directory. Slurm preserves that working directory.
+module load R/4.4
+# Prevent numerical libraries from creating extra threads in each R process.
+export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
 Rscript --vanilla combine_csv.R

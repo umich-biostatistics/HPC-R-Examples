@@ -1,48 +1,21 @@
-# Simple bootstrap analysis script with file output
+#!/usr/bin/env Rscript
+# Run from simple/. Load the data, settings, and bootstrap function.
+source("../shared/bootstrap.R")
 
-# Set seed for reproducibility
-set.seed(123)
-
-# Create output directories
-job_id <- as.integer(Sys.getenv("SLURM_JOB_ID"))
-output_dir <- file.path(getwd(), "output", job_id)
-summary_dir <- file.path(getwd(), "summary", job_id)
-
-dir.create(summary_dir, showWarnings = FALSE, recursive = TRUE)
-dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
-
-# Generate sample data
-data <- rnorm(50000, mean = 5, sd = 2)
-
-# Function to calculate mean
-calc_mean <- function(x) {
-  mean(x)
-}
-
-# Perform bootstrap
-n_bootstrap <- 50000
-
-speed <- system.time({
-  bootstrap_means <- replicate(
-    n_bootstrap, calc_mean(sample(data, replace = TRUE))
-  )
-  # Calculate confidence interval
-  ci <- quantile(bootstrap_means, c(0.025, 0.975))
+# One R process runs every iteration in order.
+iterations <- seq_len(n_bootstrap)
+time <- system.time({
+  bootstrap_means <- unlist(lapply(iterations, bootstrap_one, data = data))
 })
 
-# Create results string
-results <- paste0(
-  "Original data mean: ", mean(data), "\n",
-  "Bootstrap mean: ", mean(bootstrap_means), "\n",
-  "95% Confidence Interval: ", ci[1], " - ", ci[2], "\n",
-  "Runtime: ", speed["elapsed"], "\n"
-)
+# Summarize the complete analysis.
+print(summarize_bootstrap(bootstrap_means))
+cat("Bootstrap computation seconds:", time[["elapsed"]], "\n")
 
-# Save results to file
-writeLines(results, file.path(summary_dir, "simple_bootstrap_results.txt"))
-
-write.csv(data.frame(bootstrap_mean = bootstrap_means),
-          file = file.path(output_dir, "simple_bootstrap_means.csv"),
-          row.names = FALSE)
-
-cat("Results have been saved to simple_bootstrap_results.txt\n")
+# Job IDs name output folders; they do not affect the random samples.
+job_id <- Sys.getenv("SLURM_JOB_ID", "local-serial")
+output_dir <- file.path("output", job_id)
+dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+results <- data.frame(iteration = iterations, bootstrap_mean = bootstrap_means)
+write.csv(results, file.path(output_dir, "bootstrap_means.csv"), row.names = FALSE)
+cat("Results saved in", output_dir, "\n")

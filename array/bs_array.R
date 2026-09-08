@@ -1,77 +1,26 @@
 #!/usr/bin/env Rscript
+# Run from array/ using bs_array.slurm.
+source("../shared/bootstrap.R")
 
-# Bootstrap analysis script for SLURM job array with file output
-
-# Get the task ID from SLURM_ARRAY_TASK_ID
+# Slurm runs a separate copy of this script for each task in --array=1-4.
 task_id <- as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID"))
 task_count <- as.integer(Sys.getenv("SLURM_ARRAY_TASK_COUNT"))
-job_id <- as.integer(Sys.getenv("SLURM_ARRAY_JOB_ID"))
+job_id <- Sys.getenv("SLURM_ARRAY_JOB_ID")
 
-# Set seed based on task ID for reproducibility
-set.seed(123 + task_id)
-
-# Create output directories
-output_dir <- file.path(getwd(), "output", job_id)
-summary_dir <- file.path(getwd(), "summary", job_id)
-
-dir.create(output_dir, showWarnings = FALSE, recursive = TRUE)
-dir.create(summary_dir, showWarnings = FALSE, recursive = TRUE)
-
-# Generate sample data (in real scenarios, you'd load your data here)
-data <- rnorm(50000, mean = 5, sd = 2)
-
-# Function to calculate mean
-calc_mean <- function(x) {
-  mean(x)
-}
-
-# Perform bootstrap for this task
-n_bootstrap_per_task <- 50000 / task_count
-
-speed <- system.time({
-  bootstrap_means <- replicate(
-    n_bootstrap_per_task,
-    calc_mean(sample(data, replace = TRUE))
-  )
+# Split ITERATIONS, not observations: every task uses the same full dataset.
+# With four tasks, task 1 gets 1, 5, 9, ...; task 2 gets 2, 6, 10, ...
+all_iterations <- seq_len(n_bootstrap)
+iterations <- all_iterations[(all_iterations - 1) %% task_count + 1 == task_id]
+time <- system.time({
+  bootstrap_means <- unlist(lapply(iterations, bootstrap_one, data = data))
 })
 
-# Save detailed results for this task
-results <- data.frame(
-  task_id = task_id,
-  iteration = 1:n_bootstrap_per_task,
-  mean = bootstrap_means
-)
-write.csv(
-  results,
-  file = paste0(output_dir, "/bootstrap_results_", task_id, ".csv"),
-  row.names = FALSE
-)
-
-# Calculate summary statistics for this task
-task_mean <- mean(bootstrap_means)
-task_ci <- quantile(bootstrap_means, c(0.025, 0.975))
-
-# Create summary string
-summary <- paste0(
-  "Job ID: ", job_id, "\n",
-  "Task ID: ", task_id, " of ", task_count, "\n",
-  "Number of bootstrap iterations: ", n_bootstrap_per_task, "\n",
-  "Mean of bootstrap means: ", task_mean, "\n",
-  "95% CI of bootstrap means: ", task_ci[1], " - ", task_ci[2], "\n",
-  "Runtime: ", speed["elapsed"], "\n"
-)
-
-# Save summary to a text file
-writeLines(
-  summary,
-  paste0(summary_dir, "/bootstrap_summary_", task_id, ".txt")
-)
-
-
-cat(
-  "Summary saved to:",
-  paste0(summary_dir, "/bootstrap_summary_", task_id, ".txt"),
-  "\n"
-)
-
-cat("Task", task_id, "completed. Results and summary saved to files.\n")
+# These are partial results. Calculate the final interval in the combine step.
+cat("Task", task_id, "completed", length(iterations), "iterations\n")
+cat("This task's computation seconds:", time[["elapsed"]], "\n")
+output_dir <- file.path("output", job_id)
+dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+results <- data.frame(iteration = iterations, bootstrap_mean = as.numeric(bootstrap_means))
+filename <- paste0("bootstrap_results_", task_id, ".csv")
+write.csv(results, file.path(output_dir, filename), row.names = FALSE)
+cat("Partial results saved in", file.path(output_dir, filename), "\n")

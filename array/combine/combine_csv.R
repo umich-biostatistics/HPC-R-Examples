@@ -1,50 +1,22 @@
-# Load required packages (install if missing)
-if (!require(dplyr, quietly = TRUE)) {
-  install.packages("dplyr", repos = "https://repo.miserver.it.umich.edu/cran/")
-  library(dplyr)
-}
-if (!require(readr, quietly = TRUE)) {
-  install.packages("readr", repos = "https://repo.miserver.it.umich.edu/cran/")
-  library(readr)
-}
+#!/usr/bin/env Rscript
+# Run from array/combine/ after all array tasks have succeeded.
+source("../../shared/bootstrap.R")
 
-# Get environment variables
-array_id <- Sys.getenv("ARRAY_JOB_ID")
+# Specify the exact array to combine; never guess the latest run.
+job_id <- Sys.getenv("ARRAY_JOB_ID")
+if (job_id == "") stop("Set ARRAY_JOB_ID to the array job ID before combining")
+output_dir <- file.path("../output", job_id)
+files <- list.files(output_dir, pattern = "^bootstrap_results_[0-9]+[.]csv$",
+                    full.names = TRUE)
 
-# Find output directory (use array_id if provided, otherwise most recent)
-output_path <- "../output"
-if (!dir.exists(output_path)) {
-  stop("Directory ../output does not exist")
-}
+# Read partial files, stack their rows, and restore iteration order.
+parts <- lapply(files, read.csv)
+results <- do.call(rbind, parts)
+results <- results[order(results$iteration), ]
 
-if (array_id != "" && dir.exists(file.path(output_path, array_id))) {
-  array_data <- file.path(output_path, array_id)
-} else {
-  # Use most recently modified directory
-  dirs <- list.dirs(output_path, recursive = FALSE)
-  if (length(dirs) == 0) stop("No directories found in ../output")
-  array_data <- dirs[order(file.info(dirs)$mtime, decreasing = TRUE)][1]
-}
+# One essential check: do not report an interval from incomplete results.
+stopifnot(identical(as.integer(results$iteration), seq_len(n_bootstrap)))
 
-# Find and combine CSV files
-csv_files <- list.files(
-  path = array_data,
-  pattern = "^bootstrap_results_.*\\.csv$",
-  full.names = TRUE
-)
-
-if (length(csv_files) == 0) {
-  stop("No CSV files found in directory: ", array_data)
-}
-
-# Combine all CSV files
-combined_data <- csv_files %>%
-  lapply(read_csv, show_col_types = FALSE) %>%
-  bind_rows()
-
-# Write combined data to output file
-combined_output <- file.path(array_data, "combined", "combined_data.csv")
-dir.create(dirname(combined_output), showWarnings = FALSE, recursive = TRUE)
-
-write.csv(combined_data, combined_output, row.names = FALSE)
-cat("Successfully wrote combined data to:", combined_output, "\n")
+print(summarize_bootstrap(results$bootstrap_mean))
+write.csv(results, file.path(output_dir, "bootstrap_means.csv"), row.names = FALSE)
+cat("Combined results saved in", output_dir, "\n")

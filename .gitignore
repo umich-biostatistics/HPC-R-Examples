@@ -48,3 +48,5 @@ logs/
 .posit/
 .snakemake/
 .vscode/
+# Slurm console output
+*.out
