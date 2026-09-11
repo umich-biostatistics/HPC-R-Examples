@@ -1,11 +1,11 @@
 #!/usr/bin/env Rscript
-# Run from array/combine/ after all array tasks have succeeded.
-source("../../shared/bootstrap.R")
+# Run with the repository root as the working directory.
+source("shared/bootstrap.R")
 
 # Specify the exact array to combine; never guess the latest run.
 job_id <- Sys.getenv("ARRAY_JOB_ID")
 if (job_id == "") stop("Set ARRAY_JOB_ID to the array job ID before combining")
-output_dir <- file.path("../output", job_id)
+output_dir <- file.path("array", "output", job_id)
 files <- list.files(output_dir, pattern = "^bootstrap_results_[0-9]+[.]csv$",
                     full.names = TRUE)
 
