@@ -1,24 +1,37 @@
 # Multicore bootstrap
 
-Follow the [main lesson](../README.md). From this directory:
+Follow the [main lesson](../README.md). Submit from the repository root:
 
 ```bash
-sbatch bs_multicore.slurm
+mkdir -p logs
+sbatch multicore/bs_multicore.slurm
 ```
 
 One Slurm job requests four CPUs on one node. R creates separate worker processes
 and distributes the same bootstrap iterations using `parallel::parLapply()`.
-The bundled `parallel` package needs no installation. `on.exit()` stops workers
-when the function returns, including on an error.
+`parallelly::availableCores()` detects available CPUs, respecting Slurm limits,
+and `parallelly::makeClusterPSOCK()` creates the workers. `parallelly` extends
+R's bundled `parallel` package; `parLapply()` still performs the computation.
+`autoStop = TRUE` cleans up workers when R garbage-collects the cluster object.
 
-On your own computer, from this directory:
+Install `parallelly` once in an R session using the same R module as your jobs:
 
-```bash
-Rscript --vanilla bs_multicore.R  # one worker by default
-SLURM_CPUS_PER_TASK=4 Rscript --vanilla bs_multicore.R
+```r
+install.packages("parallelly", repos = "https://cloud.r-project.org")
 ```
 
-Use a worker count your computer supports. Results go to
-`output/local-multicore/bootstrap_means.csv`, overwritten on reruns. Under Slurm,
+Accept the personal-library prompt if needed. Package installation is separate
+from running the batch job.
+
+On your own computer, from the repository root:
+
+```bash
+R_PARALLELLY_AVAILABLECORES_MAX=2 Rscript --vanilla multicore/bs_multicore.R
+```
+
+This caps the local run at two workers. Without the cap, `availableCores()` uses
+the detected CPU availability. See the [parallelly documentation](https://parallelly.futureverse.org/)
+for how resource detection and cluster creation work. Results go to
+`multicore/output/local-multicore/bootstrap_means.csv`, overwritten on reruns. Under Slurm,
 the job ID replaces `local-multicore`. The summary prints to the terminal or batch
 log, and timing includes worker startup, computation, and collection.
