@@ -1,19 +1,22 @@
 #!/bin/bash
 #SBATCH --job-name=bs_multicore
-#SBATCH --output=%x-%j.out
+#SBATCH --output=logs/%x/%j.out
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --time=00:05:00
+#SBATCH --time=00:15:00
 #SBATCH --mem=1G
 #SBATCH --partition=standard
 #SBATCH --mail-type=FAIL,END
 # Replace SLURM_ACCOUNT with your allocation before submitting.
 #SBATCH --account=SLURM_ACCOUNT
 
-set -euo pipefail
-# Submit from this example's directory. Slurm preserves that working directory.
+# Submit from HPC-R-Examples/: sbatch multicore/bs_multicore.slurm
+# Stop the job if loading R or running a command fails.
+set -e
+
+mkdir -p logs
+
 module load R/4.4
-# Prevent numerical libraries from creating extra threads in each R process.
-export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
-Rscript --vanilla bs_multicore.R
+
+Rscript --vanilla multicore/bs_multicore.R

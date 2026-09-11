@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=param_array
-#SBATCH --output=%x-%A_%a.out
+#SBATCH --output=logs/%x/%A_%a.out
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
@@ -12,12 +12,15 @@
 #SBATCH --account=SLURM_ACCOUNT
 #SBATCH --array=1-3
 
-set -euo pipefail
-# Submit from this example's directory. Slurm preserves that working directory.
+# Submit from HPC-R-Examples/: sbatch array/read_from_csv/vars_from_csv.slurm
+# Stop the job if loading R or running a command fails.
+set -e
+
+mkdir -p logs
+
 module load R/4.4
-# Prevent numerical libraries from creating extra threads in each R process.
-export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
-# Each row supplies a mean and standard deviation; the CSV has no header.
-line=$(sed -n "${SLURM_ARRAY_TASK_ID}p" params.csv)
+
+# Each array task reads one row: mean,standard deviation.
+line=$(sed -n "${SLURM_ARRAY_TASK_ID}p" array/read_from_csv/params.csv)
 IFS=',' read -r mean sd <<< "$line"
-Rscript --vanilla vars_from_csv.R "$mean" "$sd"
+Rscript --vanilla array/read_from_csv/vars_from_csv.R "$mean" "$sd"

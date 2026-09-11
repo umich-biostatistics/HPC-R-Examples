@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=combine_csv
-#SBATCH --output=%x-%j.out
+#SBATCH --output=logs/%x/%j.out
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=1
@@ -11,9 +11,12 @@
 # Replace SLURM_ACCOUNT with your allocation before submitting.
 #SBATCH --account=SLURM_ACCOUNT
 
-set -euo pipefail
-# Submit from this example's directory. Slurm preserves that working directory.
+# Submit from HPC-R-Examples/: sbatch array/combine/combine_csv.slurm
+# Stop the job if loading R or running a command fails.
+set -e
+
+mkdir -p logs
+
 module load R/4.4
-# Prevent numerical libraries from creating extra threads in each R process.
-export OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1
-Rscript --vanilla combine_csv.R
+
+Rscript --vanilla array/combine/combine_csv.R
