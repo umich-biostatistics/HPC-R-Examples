@@ -15,7 +15,7 @@ mkdir -p logs
 sbatch array/read_from_csv/vars_from_csv.slurm
 ```
 
-Logs are `logs/param_array-ARRAY_ID_TASK_ID.out` relative to the repository root. Results are
+Logs are `logs/vars_from_csv/ARRAY_ID_TASK_ID.out` relative to the repository root. Results are
 `array/read_from_csv/output/ARRAY_ID/results_task_TASK_ID.csv`.
 
 On your own computer, from the repository root:

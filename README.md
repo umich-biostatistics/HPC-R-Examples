@@ -76,7 +76,7 @@ install packages. Serial and array examples need only base R.
 batch submissions and local R runs.** All script, input, and output paths are
 relative to this directory; the R scripts do not detect or change it.
 Create `logs/` before submitting: Slurm opens the log before running your script.
-The examples use ordinary `#SBATCH --output=logs/%x-%j.out` directives; `%x`
+The examples use `#SBATCH --output=logs/%x/%j.out` directives; `%x`
 is the job name and `%j` is the job ID. Array logs use `%A_%a` for the array and
 task IDs. Standard output and error messages share the same log.
 
@@ -95,7 +95,7 @@ Use `squeue -u "$USER"` to check progress. After completion, replace `JOB_ID` be
 with the printed number:
 
 ```bash
-cat logs/bs_simple-JOB_ID.out
+cat logs/bs_simple/JOB_ID.out
 head simple/output/JOB_ID/bootstrap_means.csv
 ```
 
@@ -109,7 +109,7 @@ in one R process.
 sbatch multicore/bs_multicore.slurm
 ```
 
-After completion, read `logs/bs_multicore-JOB_ID.out` and
+After completion, read `logs/bs_multicore/JOB_ID.out` and
 `multicore/output/JOB_ID/bootstrap_means.csv`.
 
 Compare the R scripts: `parLapply()` replaces `lapply()`. R creates workers, sends
@@ -138,7 +138,7 @@ sacct -j ARRAY_ID --format=JobID,State,ExitCode
 sbatch --export=ALL,ARRAY_JOB_ID=ARRAY_ID array/combine/combine_csv.slurm
 ```
 
-After combination finishes, its `logs/combine_csv-JOB_ID.out` log shows the final
+After combination finishes, its `logs/combine_csv/JOB_ID.out` log shows the final
 confidence interval. The complete CSV is `array/output/ARRAY_ID/bootstrap_means.csv`.
 The combine script stacks the partial results, checks that all iteration IDs are
 present exactly once, and calculates the interval from all means together.
@@ -166,7 +166,7 @@ times nor comparing one task to the whole serial job measures overall speedup.
 Monitor with `squeue -u "$USER"`. Inspect a completed job with
 `sacct -j JOB_ID --format=JobID,State,ExitCode,AllocCPUS,Elapsed,MaxRSS`.
 Cancel a job with `scancel JOB_ID`. If a job fails, read its `.out` log first.
-Array logs are named `logs/bootstrap_array-ARRAY_ID_TASK_ID.out` from the root.
+Array logs are named `logs/bs_array/ARRAY_ID_TASK_ID.out` from the root.
 If no log appears, check that `logs/` exists and that you submitted from the
 repository root.
 
@@ -183,7 +183,7 @@ Aim for a serial run of 1–3 minutes and adjust `n_bootstrap` after measuring i
 - [Serial local run](simple/README.md)
 - [Multicore local run](multicore/README.md)
 - [Array local simulation](array/README.md)
-- [Automatic array → combine workflow](workflow/README.md)
+- [Automatic array → combine workflow](array/workflow/README.md)
 - [Different parameters per array task](array/read_from_csv/README.md)
 
 For maintainers: `python3 tests/check_examples.py` runs small local comparisons

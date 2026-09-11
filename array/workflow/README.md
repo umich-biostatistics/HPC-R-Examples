@@ -4,7 +4,7 @@ First complete the manual steps in the [main lesson](../README.md). Then, from
 the repository root, run:
 
 ```bash
-bash workflow/array_workflow.sh
+bash array/workflow/array_workflow.sh
 ```
 
 The script creates `logs/`, submits the array, and saves its job ID in a Bash

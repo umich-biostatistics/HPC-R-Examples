@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run from HPC-R-Examples/: bash workflow/array_workflow.sh
+# Run from HPC-R-Examples/: bash array/workflow/array_workflow.sh
 set -e
 mkdir -p logs
 

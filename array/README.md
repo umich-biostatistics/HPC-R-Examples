@@ -41,4 +41,4 @@ This runs tasks sequentially to demonstrate partitioning without Slurm. It does
 not simulate cluster scheduling. Reruns overwrite files; use a new array ID if
 you change the number of tasks, to avoid mixing old and new outputs.
 
-Next: [dependency workflow](../workflow/README.md) or [parameter sweep](read_from_csv/README.md).
+Next: [dependency workflow](workflow/README.md) or [parameter sweep](read_from_csv/README.md).
