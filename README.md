@@ -62,11 +62,12 @@ mkdir -p logs
 Replace `SLURM_ACCOUNT` in the `.slurm` files with your allocation name. This
 branch uses Great Lakes's `standard` partition and `R/4.4` module. Check the module
 with `module spider R/4.4`; use the same available R version in every example.
+
 The multicore example needs `parallelly`. Before submitting it, install the package
 once from an R session using the same R module:
 
 ```r
-install.packages("parallelly", repos = "https://cloud.r-project.org")
+install.packages("parallelly")
 ```
 
 Accept R's offer to create a personal library if needed. The batch script does not
@@ -75,7 +76,7 @@ install packages. Serial and array examples need only base R.
 **Use the repository root (`HPC-R-Examples/`) as the working directory for all
 batch submissions and local R runs.** All script, input, and output paths are
 relative to this directory; the R scripts do not detect or change it.
-Create `logs/` before submitting: Slurm opens the log before running your script.
+
 The examples use `#SBATCH --output=logs/%x/%j.out` directives; `%x`
 is the job name and `%j` is the job ID. Array logs use `%A_%a` for the array and
 task IDs. Standard output and error messages share the same log.
@@ -185,7 +186,3 @@ Aim for a serial run of 1–3 minutes and adjust `n_bootstrap` after measuring i
 - [Array local simulation](array/README.md)
 - [Automatic array → combine workflow](array/workflow/README.md)
 - [Different parameters per array task](array/read_from_csv/README.md)
-
-For maintainers: `python3 tests/check_examples.py` runs small local comparisons
-in a temporary copy (requires R, parallelly, and Python 3). Cluster resource sizing and the
-beginner walkthrough still need validation on Great Lakes.

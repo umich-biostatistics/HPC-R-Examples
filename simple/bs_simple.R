@@ -1,23 +1,25 @@
 #!/usr/bin/env Rscript
 # Run with the repository root as the working directory.
 source("shared/bootstrap.R")
-
+n_bootstrap = 1000
+n_observations = 5000
 # One R process runs every iteration in order.
 iterations <- seq_len(n_bootstrap)
 time <- system.time({
-  results <- lapply(iterations, bootstrap_one, data = data)
-  # Turn the list of means into a numeric vector, just as in multicore.
-  bootstrap_means <- unlist(results)
+  results <- sapply(iterations, bootstrap_one, data = data)
 })
 
 # Summarize the complete analysis.
-print(summarize_bootstrap(bootstrap_means))
+print(summarize_bootstrap(results))
 cat("Bootstrap computation seconds:", time[["elapsed"]], "\n")
 
-# Job IDs name output folders; they do not affect the random samples.
+# Define file names and output locations, creating where none exist
 job_id <- Sys.getenv("SLURM_JOB_ID", "local-serial")
 output_dir <- file.path("simple", "output", job_id)
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
-results <- data.frame(iteration = iterations, bootstrap_mean = bootstrap_means)
-write.csv(results, file.path(output_dir, "bootstrap_means.csv"), row.names = FALSE)
+
+# Turn results into a data frame and write CSV file
+results_df <- data.frame(iteration = iterations, bootstrap_mean = results)
+write.csv(results_df, file.path(output_dir, "bootstrap_means.csv"), row.names = FALSE)
+
 cat("Results saved in", output_dir, "\n")

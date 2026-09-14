@@ -29,9 +29,12 @@ print(summarize_bootstrap(bootstrap_means))
 cat("Workers:", n_workers, "\n")
 cat("Seconds including worker startup and collection:", time[["elapsed"]], "\n")
 
+# Define file names and output locations, creating where none exist
 job_id <- Sys.getenv("SLURM_JOB_ID", "local-multicore")
 output_dir <- file.path("multicore", "output", job_id)
 dir.create(output_dir, recursive = TRUE, showWarnings = FALSE)
+
+# Turn results into a data frame and write CSV file
 results <- data.frame(iteration = iterations, bootstrap_mean = bootstrap_means)
 write.csv(results, file.path(output_dir, "bootstrap_means.csv"), row.names = FALSE)
 cat("Results saved in", output_dir, "\n")
