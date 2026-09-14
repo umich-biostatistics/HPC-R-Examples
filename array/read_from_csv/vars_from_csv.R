@@ -2,13 +2,16 @@
 # Run with the repository root as the working directory.
 
 # Optional extension: each task receives a different mean and standard deviation.
-# The batch script passes two positional arguments, for example: 5 2
-args <- commandArgs(trailingOnly = TRUE)
-mean_value <- as.numeric(args[1])
-sd_value <- as.numeric(args[2])
+# The task ID is the row number to use. It is 1 when you run this on your own
+# computer, outside of Slurm.
+task_id <- as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID", "1"))
+
+# Read the parameter table and take this task's row: mean, standard deviation.
+params <- read.csv("array/read_from_csv/params.csv")
+mean_value <- params$mean[task_id]
+sd_value <- params$sd[task_id]
 
 # Generate a small simulated dataset using this task's parameters.
-task_id <- as.integer(Sys.getenv("SLURM_ARRAY_TASK_ID", "1"))
 set.seed(task_id)
 samples <- rnorm(1000, mean = mean_value, sd = sd_value)
 results <- data.frame(task_id = task_id, mean = mean_value, sd = sd_value,

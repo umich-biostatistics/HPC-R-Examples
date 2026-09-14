@@ -52,3 +52,6 @@ logs/
 
 # Slurm console output
 *.out
+
+# Agent files
+.claude/

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=param_array
+#SBATCH --job-name=vars_from_csv
 #SBATCH --output=logs/%x/%A_%a.out
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -20,7 +20,5 @@ mkdir -p logs
 
 module load R/4.4
 
-# Each array task reads one row: mean,standard deviation.
-line=$(sed -n "${SLURM_ARRAY_TASK_ID}p" array/read_from_csv/params.csv)
-IFS=',' read -r mean sd <<< "$line"
-Rscript --vanilla array/read_from_csv/vars_from_csv.R "$mean" "$sd"
+# The R script reads params.csv and uses the row matching SLURM_ARRAY_TASK_ID.
+Rscript --vanilla array/read_from_csv/vars_from_csv.R
