@@ -14,8 +14,7 @@ iterations <- seq(from = task_id, to = n_bootstrap, by = task_count)
 
 time <- system.time({
   # Run this task's iterations, just like the serial example.
-  results <- lapply(iterations, bootstrap_one, data = data)
-  bootstrap_means <- unlist(results)
+  bootstrap_means <- sapply(iterations, bootstrap_one, data = data)
 })
 
 # These are partial results. Calculate the final interval in the combine step.
