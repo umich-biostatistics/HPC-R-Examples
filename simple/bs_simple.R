@@ -1,8 +1,7 @@
 #!/usr/bin/env Rscript
 # Run with the repository root as the working directory.
 source("shared/bootstrap.R")
-n_bootstrap = 1000
-n_observations = 5000
+
 # One R process runs every iteration in order.
 iterations <- seq_len(n_bootstrap)
 time <- system.time({
