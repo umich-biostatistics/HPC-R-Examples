@@ -1,4 +1,13 @@
 # The same analysis is used in all three examples.
+
+# Check for required packages
+if (!requireNamespace("parallelly", quietly = TRUE)) {
+  stop(
+    "Required package 'parallelly' is missing. Run Rscript -e \"install.packages('parallelly', repo = 'https://repo.miserver.it.umich.edu/cran')\"",
+    call. = FALSE
+  )
+}
+
 # Edit these two settings to change the size of the exercise.
 n_observations <- 50000
 n_bootstrap <- 10000
