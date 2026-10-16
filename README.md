@@ -20,11 +20,11 @@ may run at different times, on the same node or on different nodes.
 
 ## The analysis
 
-Read `shared/bootstrap.R` first. It creates 50,000 simulated observations and defines
+Read `shared/bootstrap.R` first. It creates 1,000,000 simulated observations and defines
 one bootstrap iteration: sample the full dataset **with replacement** and calculate
 its mean. Replacement allows an observation to appear more than once.
 
-Each example runs 10,000 iterations. The 2.5th and 97.5th percentiles of the resulting
+Each example runs 2,000 iterations. The 2.5th and 97.5th percentiles of the resulting
 means give a percentile 95% confidence interval. The job ID only names output folders.
 
 ### Seeding matters in parallel and batch code
@@ -44,7 +44,7 @@ split, not just on the data and settings.
 
 These examples avoid both problems by seeding **per iteration**, keyed to a global
 iteration number that does not depend on which task or worker runs it (see
-`shared/bootstrap.R` and `bootstrap_one()`). Iteration 4237 draws the same
+`shared/bootstrap.R` and `bootstrap_one()`). Iteration 1237 draws the same
 resample whether it runs serially, on worker 3 of 8, or on array task 2 of 4. That
 is why the serial, multicore, and array outputs match exactly — see
 [Compare and explore](#compare-and-explore) below — and it will keep matching even
@@ -111,7 +111,7 @@ head simple/output/JOB_ID/bootstrap_means.csv
 ```
 
 The log shows the mean, confidence interval, and runtime. The CSV contains
-`iteration` and `bootstrap_mean`. Read `bs_simple.R`: `lapply()` runs every iteration
+`iteration` and `bootstrap_mean`. Read `bs_simple.R`: `sapply()` runs every iteration
 in one R process.
 
 ## 3. Multicore: workers within one job
@@ -123,7 +123,7 @@ sbatch multicore/bs_multicore.slurm
 After completion, read `logs/bs_multicore/JOB_ID.out` and
 `multicore/output/JOB_ID/bootstrap_means.csv`.
 
-Compare the R scripts: `parLapply()` replaces `lapply()`. R creates workers, sends
+Compare the R scripts: `parLapply()` replaces `sapply()`. R creates workers, sends
 them the function and full dataset, and collects their answers. The Slurm file
 requests four CPUs; `parallelly::availableCores()` detects the allocation, and
 `parallelly::makeClusterPSOCK()` creates the workers. The computation still uses
@@ -182,11 +182,12 @@ If no log appears, check that `logs/` exists and that you submitted from the
 repository root.
 
 To try more work, edit the two settings at the top of `shared/bootstrap.R`.
-An optional larger experiment uses 50,000 observations and 50,000 iterations;
-increase the requested time after measuring a smaller run. Keep settings unchanged
-between the three runs and array combination. The three compute jobs request
-15 minutes and 1 GB each; these are starting points pending measurements on
-Great Lakes. The time limit allows a longer run but does not increase the work.
+The defaults (1,000,000 observations, 2,000 iterations) take the serial job
+almost 2 minutes on Great Lakes. An optional larger experiment keeps 1,000,000
+observations and uses 10,000 iterations; increase the requested time after
+measuring a smaller run. Keep settings unchanged between the three runs and
+array combination. The three compute jobs request 15 minutes and 1 GB each.
+The time limit allows a longer run but does not increase the work.
 Aim for a serial run of 1–3 minutes and adjust `n_bootstrap` after measuring it.
 
 ## Optional material
