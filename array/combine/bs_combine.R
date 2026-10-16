@@ -6,7 +6,7 @@ source("shared/bootstrap.R")
 job_id <- Sys.getenv("ARRAY_JOB_ID")
 if (job_id == "") stop("Set ARRAY_JOB_ID to the array job ID before combining")
 output_dir <- file.path("array", "output", job_id)
-files <- list.files(output_dir, pattern = "^bootstrap_results_[0-9]+[.]csv$",
+files <- list.files(output_dir, pattern = "^bs_results_[0-9]+[.]csv$",
                     full.names = TRUE)
 
 # Read partial files, stack their rows, and restore iteration order.

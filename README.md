@@ -134,12 +134,12 @@ After all tasks succeed, inspect a partial CSV and submit the combine job.
 Replace `ARRAY_ID` with the array job ID:
 
 ```bash
-head array/output/ARRAY_ID/bootstrap_results_1.csv
+head array/output/ARRAY_ID/bs_results_1.csv
 sacct -j ARRAY_ID --format=JobID,State,ExitCode
-sbatch --export=ALL,ARRAY_JOB_ID=ARRAY_ID array/combine/combine_csv.slurm
+sbatch --export=ALL,ARRAY_JOB_ID=ARRAY_ID array/combine/bs_combine.slurm
 ```
 
-After combination finishes, its `logs/combine_csv/JOB_ID.out` log shows the final
+After combination finishes, its `logs/bs_combine/JOB_ID.out` log shows the final
 confidence interval. The complete CSV is `array/output/ARRAY_ID/bootstrap_means.csv`.
 The combine script stacks the partial results, checks that all iteration IDs are
 present exactly once, and calculates the interval from all means together.

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=combine_csv
+#SBATCH --job-name=bs_combine
 #SBATCH --output=logs/%x/%j.out
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
@@ -11,7 +11,7 @@
 # Replace SLURM_ACCOUNT with your allocation before submitting.
 #SBATCH --account=SLURM_ACCOUNT
 
-# Submit from HPC-R-Examples/: sbatch array/combine/combine_csv.slurm
+# Submit from HPC-R-Examples/: sbatch array/combine/bs_combine.slurm
 # Stop the job if loading R or running a command fails.
 set -e
 
@@ -19,4 +19,4 @@ mkdir -p logs
 
 module load R/4.4
 
-Rscript --vanilla array/combine/combine_csv.R
+Rscript --vanilla array/combine/bs_combine.R

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=bootstrap_array
+#SBATCH --job-name=bs_array
 #SBATCH --output=logs/%x/%A_%a.out
 #SBATCH --nodes=1
 #SBATCH --ntasks=1

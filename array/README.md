@@ -4,7 +4,7 @@ Follow the [main lesson](../README.md) for submission and combination. This exam
 submits from the repository root and uses a contiguous array starting at 1, normally `--array=1-4`.
 Each task gets some iteration IDs but uses the same full dataset.
 
-Partial files are `array/output/ARRAY_ID/bootstrap_results_TASK_ID.csv`. The combine
+Partial files are `array/output/ARRAY_ID/bs_results_TASK_ID.csv`. The combine
 script sorts all rows by iteration and checks that every iteration appears once.
 It writes `array/output/ARRAY_ID/bootstrap_means.csv` and prints the final summary.
 Keep the shared settings unchanged until combination finishes.
@@ -34,7 +34,7 @@ for task in 1 2 3 4; do
   SLURM_ARRAY_JOB_ID=local-array SLURM_ARRAY_TASK_ID="$task" \
   SLURM_ARRAY_TASK_COUNT=4 Rscript --vanilla array/bs_array.R
 done
-ARRAY_JOB_ID=local-array Rscript --vanilla array/combine/combine_csv.R
+ARRAY_JOB_ID=local-array Rscript --vanilla array/combine/bs_combine.R
 ```
 
 This runs tasks sequentially to demonstrate partitioning without Slurm. It does

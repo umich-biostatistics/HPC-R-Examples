@@ -21,16 +21,16 @@ From the repository root, after setting the Slurm account:
 
 ```bash
 mkdir -p logs
-sbatch array/read_from_csv/vars_from_csv.slurm
+sbatch array/read_from_csv/bs_vars_from_csv.slurm
 ```
 
-Logs are `logs/vars_from_csv/ARRAY_ID_TASK_ID.out` relative to the repository root. Results are
+Logs are `logs/bs_vars_from_csv/ARRAY_ID_TASK_ID.out` relative to the repository root. Results are
 `array/read_from_csv/output/ARRAY_ID/results_task_TASK_ID.csv`.
 
 On your own computer, from the repository root:
 
 ```bash
-Rscript --vanilla array/read_from_csv/vars_from_csv.R
+Rscript --vanilla array/read_from_csv/bs_vars_from_csv.R
 ```
 
 Outside of Slurm there is no task ID, so the script uses row 1 (`5,2`). Local
