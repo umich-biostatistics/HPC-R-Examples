@@ -59,8 +59,18 @@ cd HPC-R-Examples
 mkdir -p logs
 ```
 
-Replace `SLURM_ACCOUNT` in the `.slurm` files with your allocation name. This
-branch uses Great Lakes's `standard` partition and `R/4.4` module. Check the module
+Replace `SLURM_ACCOUNT` in the `.slurm` files with your allocation name. To swap
+it in every `.slurm` file at once, run this from the repository root (replace
+`your_account` with your account name; `my_accounts` lists yours):
+
+```bash
+find . -name '*.slurm' -exec sed -i 's/SLURM_ACCOUNT/your_account/g' {} + -exec grep -H -- '--account' {} +
+```
+
+It lists each `.slurm` file with its resulting `--account` line, so you can confirm
+the change.
+
+This branch uses Great Lakes's `standard` partition and `R/4.4` module. Check the module
 with `module spider R/4.4`; use the same available R version in every example.
 
 The multicore example needs `parallelly`. Before submitting it, install the package
