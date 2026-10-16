@@ -9,8 +9,8 @@ if (!requireNamespace("parallelly", quietly = TRUE)) {
 }
 
 # Edit these two settings to change the size of the exercise.
-n_observations <- 50000
-n_bootstrap <- 10000
+n_observations <- 1000000
+n_bootstrap <- 2000
 
 # Every script creates the same full dataset, so simple/multicore/array
 # results are directly comparable.
